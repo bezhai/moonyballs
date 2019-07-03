@@ -15,7 +15,7 @@ void PlayerBall::Movement()
 }
 
 //计算两个点之间的距离
-float32 GetDistance(BasicShape a, BasicShape b)
+float64 GetDistance(BasicShape a, BasicShape b)
 {
 	return physqrt((a.coordX - b.coordX) * (a.coordX - b.coordX) + (a.coordY - b.coordY) * (a.coordY - b.coordY));
 }

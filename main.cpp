@@ -1,17 +1,11 @@
-#include "gamewindow.h"
+#include "mainwindow.h"
 #include <QApplication>
-#include <QTranslator>
 
-int main(int argc, char **argv )
+int main(int argc, char *argv[])
 {
-    QApplication app( argc, argv );
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
 
-    QTranslator translator;
-    translator.load( ":language/game_zh_CN.qm" );
-    app.installTranslator( &translator );
-
-    GameWindow window;
-    window.show();
-
-    return app.exec();
+    return a.exec();
 }

@@ -7,6 +7,11 @@
 */
 #ifndef BARRIERS_H_
 #define BARRIERS_H_
+
+#include <vector>
+
+using std::vector;
+
 const double SQRT_3 = 1.732;
 enum MODE { CIRCLE, RECTANGLE, TRIANGLE, PENTAGON, HEXAGON };	// The judge standard
 class Barrier								// The base class of Barrier
@@ -63,7 +68,7 @@ public:
 	inline void SetRot(double rotation) { this->rotation = rotation; }
 
 	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(double points[]);
+	virtual void GetPos(vector<double> &points);
 
 private:
 	double length;
@@ -83,7 +88,7 @@ public:
 	inline void SetRot(double rotation) { this->rotation = rotation; }
 
 	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(double points[]);
+	virtual void GetPos(vector<double> &points);
 
 private:
 	double length;		// The length of the triangle's side
@@ -102,7 +107,7 @@ public:
 	inline void SetRot(double rotation) { this->rotation = rotation; }
 	
 	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(double points[]);
+	virtual void GetPos(vector<double> &points);
 private:
 	double radius;		// The distance between centroid and a vertex
 	double rotation;
@@ -120,7 +125,7 @@ public:
 	inline void SetRot(double rotation) { this->rotation = rotation; }
 
 	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(double points[]);
+	virtual void GetPos(vector<double> &points);
 
 private:
 	double radius;		// The distance between centroid and a vertex

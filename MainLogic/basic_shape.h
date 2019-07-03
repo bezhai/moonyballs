@@ -8,14 +8,22 @@
 
 #include "math_setting.h"
 
+//左上角，右下角
+#define STARTX   0
+#define STARTY 640
+#define ENDX   360
+#define ENDY     0
+#define BALLRADIUS 10.0f
+#define BASICSPEED 10.0f
+
 //基本形状，包括位置定义
 class BasicShape
 {
 private:
-	float32 coordX;
-	float32 coordY;
+	float64 coordX;
+	float64 coordY;
 public:
-	BasicShape(float32 x = 0.0f, float32 y = 0.0f)
+	BasicShape(float64 x = ENDX / 2, float64 y = STARTY)
 	{
 		coordX = x;
 		coordY = y;
@@ -33,42 +41,42 @@ public:
 		coordX = b.coordX;
 		coordY = b.coordY;
 	}
-	inline void SetcoordX(float32 x)
+	inline void SetcoordX(float64 x)
 	{
 		coordX = x;
 	}
-	inline void SetcoordY(float32 y)
+	inline void SetcoordY(float64 y)
 	{
 		coordY = y;
 	}
-	inline void AddcoordX(float32 x)
+	inline void AddcoordX(float64 x)
 	{
 		coordX += x;
 	}
-	inline void AddcoordY(float32 y)
+	inline void AddcoordY(float64 y)
 	{
 		coordY += y;
 	}
-	inline float32 GetcoordX()
+	inline float64 GetcoordX()
 	{
 		return coordX;
 	}
-	inline float32 GetcoordY()
+	inline float64 GetcoordY()
 	{
 		return coordY;
 	}
 	//获取两点间距离
-	friend float32 GetDistance(BasicShape a, BasicShape b);
+	friend float64 GetDistance(BasicShape a, BasicShape b);
 };
 
 //定义了圆，包括半径
 class Circle : public BasicShape
 {
 private:
-	float32 radius;
+	float64 radius;
 public:
 	Circle() {}
-	Circle(float32 x, float32 y, float32 r = 0) : BasicShape(x, y)
+	Circle(float64 x, float64 y, float64 r = BALLRADIUS) : BasicShape(x, y)
 	{
 		radius = r;
 	}
@@ -86,7 +94,7 @@ public:
 		SetcoordY(b.GetcoordY());
 		this->radius = b.radius;
 	}
-	inline float32 GetRadius()
+	inline float64 GetRadius()
 	{
 		return radius;
 	}
@@ -96,38 +104,40 @@ public:
 class PlayerBall : public Circle
 {
 public:
-	PlayerBall(float32 x, float32 y, float32 r, float32 v, float32 _angle) : Circle(x, y, r)
+	PlayerBall(float64 x, float64 y, float64 r, float64 v = BASICSPEED, float64 _angle = -PAI / 2) : Circle(x, y, r)
 	{
 		speed = v;
 		angle = _angle;
 	}
 	~PlayerBall() {}
-	void SetSpeed(float32 v)
+	void SetSpeed(float64 v)
 	{
 		speed = v;
 	}
-	void SetAngle(float32 _angle)
+	void SetAngle(float64 _angle)
 	{
 		angle = _angle;
 
 	}
-	inline float32 GetAngle()
+	inline void SetActive() { activity = true; }
+	inline void SetInactve() { activity = false; }
+	inline float64 GetAngle()
 	{
 		return angle;
 	}
-	inline float32 GetSpeed()
+	inline float64 GetSpeed()
 	{
 		return speed;
 	}
 	void Movement();
 
 private:
-	float32 speed;
-	float32 angle;
-	
+	float64 speed;
+	float64 angle;
+	bool activity;
 };
 
-
+float64 GetDistance(BasicShape a, BasicShape b);
 
 #endif // !BASIC_SHAPE_H
 
