@@ -1,5 +1,4 @@
 // barriers.cpp -- barriers methods
-#include "pch.h"
 #include "barriers.h"
 #include <iostream>
 #include <ctime>
