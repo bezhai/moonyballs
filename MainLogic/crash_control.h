@@ -38,8 +38,8 @@ public:
 //一些关于碰撞的命名空间
 namespace CrashJudge
 {
-	//根据当前事件给出单个球下一帧的坐标
-	void NextCoord(std::vector<Segment> seg_list, PlayerBall &play);
+	//根据当前事件给出单个球下一帧的方向
+	void SetAngle(std::vector<Segment> seg_list, PlayerBall &play);
 	//判断是否碰撞线段，如果是返回true，否则返回false
 	bool SegmentCrash(Segment seg, PlayerBall &play);
 	//判断是否触碰边界，只要不是底边则改变方向，返回false，否则返回true
@@ -56,8 +56,7 @@ namespace CrashJudge
 namespace BarrierManager
 {
 	//把障碍物分割为线段
-	template <class T>
-	void DevideBarrier(T barrier, vector<Segment> &seg_list);
+	void DevideBarrier(Barrier* barrier, vector<Segment> &seg_list);
 }
 
 #endif // !CRASH_CONTROL_H

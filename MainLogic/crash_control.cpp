@@ -78,16 +78,13 @@ float64 CrashJudge::AdjustAngle(float64 barri_angle, float64 ball_angle)
 	return barri_angle;
 }
 
-void CrashJudge::NextCoord(vector<Segment> seg_list, PlayerBall &play)
+void CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 {
 	//如果没有出界，则继续按原计划运动，否则执行终止运动
-	if (!CrashJudge::BoundaryCrash(play) && play.GetAngle() != 250)
-	{
-		play.Movement();
-	}
-	else
+	if (CrashJudge::BoundaryCrash(play) || play.GetActive() == false)
 	{
 		BallEndMove(play);
+		return;
 	}
 	//判断碰撞到障碍物
 	for (auto &seg : seg_list)
@@ -126,29 +123,26 @@ bool CrashJudge::BoundaryCrash(PlayerBall &play)
 
 void CrashJudge::BallEndMove(PlayerBall &play)
 {
-	if (play.GetAngle() != 250)
-	{
-		play.SetAngle(250);
-		play.SetcoordX(ENDX / 2);
-		play.SetcoordY(ENDY);
-		play.SetSpeed(0);
-	}
+	play.SetInactve();
+	play.SetAngle(-PAI / 2);
+	play.SetcoordX(ENDX / 2);
+	play.SetcoordY(ENDY);
+	play.SetSpeed(BASICSPEED);
 }
 
-template <class T>
-void BarrierManager::DevideBarrier(T barrier, vector<Segment> &seg_list)
+void BarrierManager::DevideBarrier(Barrier* barrier, vector<Segment> &seg_list)
 {
 	vector<float64> point_list;
-	barrier.GetPos(point_list);
-	
-	
-	for (int i = 0; i < point_list.size() / 2; i++)
+	barrier->GetPos(point_list);//从类提取顶点坐标信息
+	int i = 0;
+	for (; i < point_list.size() / 2 - 1; i++)
 	{
 		Segment seg_temp(point_list[2 * i], point_list[2 * i + 1], point_list[2 * i + 2], point_list[2 * i + 3]);
 		seg_list.push_back(seg_temp);
 	}
-	seg_list.push_back(new Segment(point_list[0], point_list[1]));
-	point_list.swap(vector<float64>());
+	Segment temp(point_list[2 * i], point_list[2 * i + 1], point_list[0], point_list[1]);
+	seg_list.push_back(temp);
+	point_list.clear();
 }
 
 void CrashJudge::BallCrash(PlayerBall &play, CircleBarrier circle)

@@ -33,6 +33,7 @@ public:
 
 	virtual void SetCalculateRadius(double r) { this->calculate_radius = r; }
 	bool IsCovered(const Barrier &br);
+	virtual void GetPos(vector<double> &points) {}
 private:
 	double x;			// The position of centroid
 	double y;

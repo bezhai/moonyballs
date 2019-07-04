@@ -18,10 +18,5 @@ typedef double float64;
 #define phymin fmin
 #define phymax fmax
 
-#define TIME 0.05f 
-#define ACCELERATION 5.0f
-#define INFINITE_S 0.005f
-#define PAI 3.1415926
-
 #endif // !MATH_SETTING_H
 
