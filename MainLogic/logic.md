@@ -1,0 +1,6 @@
+- 使用logic函数需要添加crash_control.h
+- 函数原型为void logic(PlayerBall &ball, Barrier** bars, CircleBarrier* _circle, int bars_num, int _circle_num);
+  - PlayerBall：玩家小球类，构造函数为PlayerBall(float64 x, float64 y, float64 r, float64 v, float64 _angle, bool activity) 
+  - bars为存储障碍物对象**地址**的数组
+  - 通过对小球分析运动，更新下一帧坐标
+  - 需要getcoordX和getcoordY函数获得x和y坐标
