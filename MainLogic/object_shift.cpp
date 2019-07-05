@@ -1,4 +1,5 @@
 #include "object_shift.h"
+#include <ctime>
 
 void MainControl::SingleBallCalc(PlayerBall &ball, Barrier** bars, CircleBarrier* _circle, int bars_num, int _circle_num, Prop** circles, int32 prop_num)
 {
@@ -90,5 +91,44 @@ int MainControl::GetBlue(Barrier* bar)
 	else
 	{
 		return 0;
+	}
+}
+
+PlayerBall MainControl::PlayerGenerate()
+{
+	PlayerBall ball = *new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 10.0f, - PAI / 3, true);
+	return ball;
+}
+
+Barrier* MainControl::BarrierGenerate(Barrier** bars, int num)
+{
+	MODE mode_num = (MODE)(time(0) % 5);
+	if (mode_num == CIRCLE)
+	{
+		CircleBarrier temp(0, 0, 0, 1);
+		temp.SetRadius(Generate::GRadius());
+		Generate::GcoordXY(&temp, bars, num);
+		return (Barrier *)&temp;
+	}
+	if (mode_num == TRIANGLE)
+	{
+		TriangleBarrier temp(0, 0, 0, 1);
+		temp.SetCalculateRadius(Generate::GRadius());
+		Generate::GcoordXY(&temp, bars, num);
+		return (Barrier *)&temp;
+	}
+	if (mode_num == PENTAGON)
+	{
+		PentangoBarrier temp(0, 0, 0, 1);
+		temp.SetCalculateRadius(Generate::GRadius());
+		Generate::GcoordXY(&temp, bars, num);
+		return (Barrier *)&temp;
+	}
+	if (mode_num == RECTANGLE)
+	{
+		RectangleBarrier temp(0, 0, 10, 10, 2);
+		temp.SetCalculateRadius(Generate::GRadius());
+		Generate::GcoordXY(&temp, bars, num);
+		return (Barrier *)&temp;
 	}
 }

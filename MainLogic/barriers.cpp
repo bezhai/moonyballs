@@ -24,6 +24,7 @@ CircleBarrier::CircleBarrier(float64 x, float64 y, float64 r, int32 hp) :Barrier
 {
 	this->radius = r;
 	this->SetCalculateRadius(r);
+	this->SetMode(CIRCLE);
 }
 
 CircleBarrier::~CircleBarrier() {}
@@ -33,6 +34,7 @@ RectangleBarrier::RectangleBarrier(float64 x, float64 y, float64 len, float64 wi
 	this->length = len;
 	this->width = wid;
 	this->SetCalculateRadius(sqrt(pow(len, 2.0) + pow(wid, 2.0)));
+	this->SetMode(RECTANGLE);
 }
 
 RectangleBarrier::~RectangleBarrier() {}
@@ -42,6 +44,7 @@ TriangleBarrier::TriangleBarrier(float64 x, float64 y, float64 len, int32 hp, fl
 	this->length = len;
 	this->rotation = rot;
 	this->SetCalculateRadius(len / SQRT_3);
+	this->SetMode(TRIANGLE);
 }
 
 TriangleBarrier::~TriangleBarrier() {}
@@ -51,6 +54,7 @@ PentangoBarrier::PentangoBarrier(float64 x, float64 y, float64 r, int32 hp, floa
 	this->radius = r;
 	this->rotation = rot;
 	this->SetCalculateRadius(r);
+	this->SetMode(PENTAGON);
 }
 
 PentangoBarrier::~PentangoBarrier() {}
@@ -60,6 +64,7 @@ HexagonBarrier::HexagonBarrier(float64 x,float64 y, float64 r,int32 hp, float64 
 	this->radius = r;
 	this->rotation = rot;
 	this->SetCalculateRadius(r);
+	this->SetMode(HEXAGON);
 }
 
 HexagonBarrier::~HexagonBarrier() {}

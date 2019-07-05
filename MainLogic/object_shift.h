@@ -15,10 +15,12 @@ namespace MainControl
 	*其中bars为存储障碍物对象地址的数组
 	*已经集成减少所有对象hp
 	*/
-	void BarrierMovement(Barrier** bars, int32 bars_num, CircleBarrier** b_circle,int32 b_c_num, Circle** circles, int32 prop_num);
+	void BarrierMovement(Barrier**, int32 , CircleBarrier** ,int32 , Circle** , int32 );
 	int GetRed(Barrier* bar);
 	int GetGreen(Barrier* bar);
 	int GetBlue(Barrier* bar);
+	PlayerBall PlayerGenerate();
+	Barrier* BarrierGenerate(Barrier**, int num);//参数为之前生成的障碍物对象的数组
 }
 
 

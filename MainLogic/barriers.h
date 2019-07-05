@@ -39,11 +39,15 @@ public:
 	virtual void SetCalculateRadius(float64 r) { this->calculate_radius = r; }
 	bool IsCovered(Barrier &br);
 	virtual void GetPos(vector<float64> &points) {}
+	int GetMode() { return mode_num; }
+protected:
+	void SetMode(MODE num) { mode_num = num; }
 private:
 	float64 x;			// The position of centroid
 	float64 y;
 	int32 hp;				// The times of being delete
 	float64 calculate_radius;	// The radius of circumcircle
+	MODE mode_num;
 };
 class CircleBarrier :public Barrier			// Circle
 {
