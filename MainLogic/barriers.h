@@ -9,127 +9,132 @@
 #define BARRIERS_H_
 
 #include <vector>
+#include "math_setting.h"
 
 using std::vector;
 
-const double SQRT_3 = 1.732;
+const float64 SQRT_3 = 1.732;
+
 enum MODE { CIRCLE, RECTANGLE, TRIANGLE, PENTAGON, HEXAGON };	// The judge standard
 class Barrier								// The base class of Barrier
 {
 public:
-	Barrier(double set_x, double set_y, int hp = 1);
+	Barrier(float64 set_x, float64 set_y, int32 hp = 1);
 	virtual ~Barrier();
 
-	inline double GetX() { return this->x; }
-	inline double GetY() { return this->y; }
-	inline int GetHp() { return this->hp; }
-	inline double GetCalculateRadius() { return this->calculate_radius; }
+	inline float64 GetX() { return this->x; }
+	inline float64 GetY() { return this->y; }
+	inline int32 GetHp() { return this->hp; }
+	inline float64 GetCalculateRadius() { return this->calculate_radius; }
 
-	inline void SetX(double set_x) { this->x = set_x; }
-	inline void SetY(double set_y) { this->y = set_y; }
+	inline void SetX(float64 set_x) { this->x = set_x; }
+	inline void SetY(float64 set_y) { this->y = set_y; }
 
-	inline void Damaged(int damage = 1) { this->hp -= damage; }
-	inline void SetHp(int set_hp) { this->hp = set_hp; }
+	inline void AddX(float64 set_x) { this->x += set_x; }
+	inline void AddY(float64 set_y) { this->y += set_y; }
 
-	virtual void SetCalculateRadius(double r) { this->calculate_radius = r; }
-	bool IsCovered(const Barrier &br);
-	virtual void GetPos(vector<double> &points) {}
+	inline void Damaged(int32 damage = 1) { this->hp -= damage; }
+	inline void SetHp(int32 set_hp) { this->hp = set_hp; }
+
+	virtual void SetCalculateRadius(float64 r) { this->calculate_radius = r; }
+	bool IsCovered(Barrier &br);
+	virtual void GetPos(vector<float64> &points) {}
 private:
-	double x;			// The position of centroid
-	double y;
-	int hp;				// The times of being delete
-	double calculate_radius;	// The radius of circumcircle
+	float64 x;			// The position of centroid
+	float64 y;
+	int32 hp;				// The times of being delete
+	float64 calculate_radius;	// The radius of circumcircle
 };
 class CircleBarrier :public Barrier			// Circle
 {
 public:
-	CircleBarrier(double x, double y, double r, int hp = 1);
+	CircleBarrier(float64 x, float64 y, float64 r, int32 hp = 1);
 	virtual ~CircleBarrier();
 
-	inline double GetRadius() { return this->radius; }
+	inline float64 GetRadius() { return this->radius; }
 
-	inline void SetRadius(double r) { this->radius = r; }
-	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
+	inline void SetRadius(float64 r) { this->radius = r; }
+	virtual void SetCalculateRadius(float64 r) { Barrier::SetCalculateRadius(r); }
 
 private:
-	double radius;
+	float64 radius;
  };
 class RectangleBarrier :public Barrier
 {
 public:
-	RectangleBarrier(double x, double y, double len, double wid, int hp = 1, double rot = 0.0);
+	RectangleBarrier(float64 x, float64 y, float64 len, float64 wid, int32 hp = 1, float64 rot = 0.0);
 	virtual ~RectangleBarrier();
 
-	inline double GetLength() { return this->length; }
-	inline double GetWidth() { return this->width; }
-	inline double GetRot() { return this->rotation; }
+	inline float64 GetLength() { return this->length; }
+	inline float64 GetWidth() { return this->width; }
+	inline float64 GetRot() { return this->rotation; }
 
-	inline void SetLength(double length) { this->length = length; }
-	inline void SetWidth(double width) { this->width = width; }
-	inline void SetRot(double rotation) { this->rotation = rotation; }
+	inline void SetLength(float64 length) { this->length = length; }
+	inline void SetWidth(float64 width) { this->width = width; }
+	inline void SetRot(float64 rotation) { this->rotation = rotation; }
 
-	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(vector<double> &points);
+	virtual void SetCalculateRadius(float64 r) { Barrier::SetCalculateRadius(r); }
+	virtual void GetPos(vector<float64> &points);
 
 private:
-	double length;
-	double width;
-	double rotation;
+	float64 length;
+	float64 width;
+	float64 rotation;
 };
 class TriangleBarrier :public Barrier
 {
 public:
-	TriangleBarrier(double x, double y, double len, int hp = 1, double rot = 0.0);
+	TriangleBarrier(float64 x, float64 y, float64 len, int32 hp = 1, float64 rot = 0.0);
 	virtual ~TriangleBarrier();
 
-	inline double GetLength() { return this->length; }
-	inline double GetRot() { return this->rotation; }
+	inline float64 GetLength() { return this->length; }
+	inline float64 GetRot() { return this->rotation; }
 
-	inline void SetLength(double length) { this->length = length; }
-	inline void SetRot(double rotation) { this->rotation = rotation; }
+	inline void SetLength(float64 length) { this->length = length; }
+	inline void SetRot(float64 rotation) { this->rotation = rotation; }
 
-	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(vector<double> &points);
+	virtual void SetCalculateRadius(float64 r) { Barrier::SetCalculateRadius(r); }
+	virtual void GetPos(vector<float64> &points);
 
 private:
-	double length;		// The length of the triangle's side
-	double rotation;
+	float64 length;		// The length of the triangle's side
+	float64 rotation;
 };
 class PentangoBarrier :public Barrier
 {
 public:
-	PentangoBarrier(double x, double y, double r, int hp = 1, double rot = 0.0);
+	PentangoBarrier(float64 x, float64 y, float64 r, int32 hp = 1, float64 rot = 0.0);
 	virtual ~PentangoBarrier();
 
-	inline double GetRadius() { return this->radius; }
-	inline double GetRot() { return this->rotation; }
+	inline float64 GetRadius() { return this->radius; }
+	inline float64 GetRot() { return this->rotation; }
 	
-	inline void SetLength(double radius) { this->radius = radius; }
-	inline void SetRot(double rotation) { this->rotation = rotation; }
+	inline void SetLength(float64 radius) { this->radius = radius; }
+	inline void SetRot(float64 rotation) { this->rotation = rotation; }
 	
-	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(vector<double> &points);
+	virtual void SetCalculateRadius(float64 r) { Barrier::SetCalculateRadius(r); }
+	virtual void GetPos(vector<float64> &points);
 private:
-	double radius;		// The distance between centroid and a vertex
-	double rotation;
+	float64 radius;		// The distance between centroid and a vertex
+	float64 rotation;
 };
 class HexagonBarrier :public Barrier
 {
 public:
-	HexagonBarrier(double x, double y, double r, int hp = 1, double rot = 0.0);
+	HexagonBarrier(float64 x, float64 y, float64 r, int32 hp = 1, float64 rot = 0.0);
 	virtual ~HexagonBarrier();
 
-	inline double GetRadius() { return this->radius; }
-	inline double GetRot() { return this->rotation; }
+	inline float64 GetRadius() { return this->radius; }
+	inline float64 GetRot() { return this->rotation; }
 
-	inline void SetLength(double radius) { this->radius = radius; }
-	inline void SetRot(double rotation) { this->rotation = rotation; }
+	inline void SetLength(float64 radius) { this->radius = radius; }
+	inline void SetRot(float64 rotation) { this->rotation = rotation; }
 
-	virtual void SetCalculateRadius(double r) { Barrier::SetCalculateRadius(r); }
-	virtual void GetPos(vector<double> &points);
+	virtual void SetCalculateRadius(float64 r) { Barrier::SetCalculateRadius(r); }
+	virtual void GetPos(vector<float64> &points);
 
 private:
-	double radius;		// The distance between centroid and a vertex
-	double rotation;
+	float64 radius;		// The distance between centroid and a vertex
+	float64 rotation;
 };
 #endif // !BARRIERS_H_

@@ -8,7 +8,8 @@
 
 #include "basic_shape.h"
 #include "barriers.h"
-#include <vector>
+#include <vector>  
+
 
 //定义障碍物的线段类
 class Segment
@@ -39,7 +40,7 @@ public:
 namespace CrashJudge
 {
 	//根据当前事件给出单个球下一帧的方向
-	void SetAngle(std::vector<Segment> seg_list, PlayerBall &play);
+	int32 SetAngle(std::vector<Segment> seg_list, PlayerBall &play);
 	//判断是否碰撞线段，如果是返回true，否则返回false
 	bool SegmentCrash(Segment seg, PlayerBall &play);
 	//判断是否触碰边界，只要不是底边则改变方向，返回false，否则返回true
@@ -50,8 +51,9 @@ namespace CrashJudge
 	float64 AdjustAngle(float64 barri_angle, float64 ball_angle);
 	//当触底时，小球的运动方程
 	void BallEndMove(PlayerBall &play);
+	//确定小球所在层数，一般为两层，返回上面那层
+	int GetFloor(PlayerBall play);
 }
-
 
 namespace BarrierManager
 {

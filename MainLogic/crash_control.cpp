@@ -78,13 +78,13 @@ float64 CrashJudge::AdjustAngle(float64 barri_angle, float64 ball_angle)
 	return barri_angle;
 }
 
-void CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
+int32 CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 {
 	//如果没有出界，则继续按原计划运动，否则执行终止运动
 	if (CrashJudge::BoundaryCrash(play) || play.GetActive() == false)
 	{
 		BallEndMove(play);
-		return;
+		return 0;
 	}
 	//判断碰撞到障碍物
 	for (auto &seg : seg_list)
@@ -95,8 +95,17 @@ void CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 			float64 ball_angle = play.GetAngle();
 			float64 barri_angle = AdjustAngle(seg.CalcAngle(), ball_angle);
 			play.SetAngle(2 * barri_angle - ball_angle);
+			if (play.GetRadius() == big_ball_radius)
+			{
+				return 2;//大球碰撞时减少的hp
+			}
+			else
+			{
+				return 1;//小球碰撞时减少的hp
+			}
 		}
 	}
+	return 0;
 }
 
 bool CrashJudge::BoundaryCrash(PlayerBall &play)
@@ -169,4 +178,19 @@ void CrashJudge::BallCrash(PlayerBall &play, CircleBarrier circle)
 		tanline_angle = AdjustAngle(tanline_angle, play.GetAngle());
 		play.SetAngle(2 * tanline_angle - play.GetAngle());
 	}
+}
+
+int CrashJudge::GetFloor(PlayerBall play)
+{
+	int floor = 0;//初始层数，最底层为第0层
+	if (play.GetAngle() > 0)//上升时以球最低处为较下层
+	{
+		floor++;
+		floor += (int) ((play.GetcoordY() - play.GetRadius()) / per_height);
+	}
+	else
+	{
+		floor += (int)((play.GetcoordY() + play.GetRadius()) / per_height);
+	}
+	return floor;
 }

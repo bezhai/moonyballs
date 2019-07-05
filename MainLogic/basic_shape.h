@@ -9,17 +9,21 @@
 #include "math_setting.h"
 
 //左上角，右下角
-#define STARTX   0
-#define STARTY 640
-#define ENDX   360
+#define STARTX  40
+#define STARTY 560
+#define ENDX   560
 #define ENDY     0
 
-#define BALLRADIUS 10.0f
 #define BASICSPEED 10.0f
-#define TIME 0.05f
+#define TIME 0.02f
 #define ACCELERATION -5.0f
 #define INFINITE_S 0.005f
 #define PAI 3.1415926
+
+//一共有十层，每一层的高度为1/10
+const float64 per_height = (STARTY - ENDY) / 10;
+const float64 big_ball_radius = 10.0f;
+const float64 small_ball_radius = 6.0f;
 
 //基本形状，包括位置定义
 class BasicShape
@@ -61,7 +65,7 @@ class Circle : public BasicShape
 {
 public:
 	Circle() {}
-	Circle(float64 x, float64 y, float64 r = BALLRADIUS) : BasicShape(x, y){ radius = r;}
+	Circle(float64 x, float64 y, float64 r) : BasicShape(x, y){ radius = r;}
 	~Circle() {}
 	virtual Circle operator + (Circle b)
 	{
@@ -85,7 +89,7 @@ private:
 class PlayerBall : public Circle
 {
 public:
-	PlayerBall(float64 x, float64 y, float64 r, float64 v = BASICSPEED, float64 _angle = -PAI / 2, bool activity = true) : Circle(x, y, r)
+	PlayerBall(float64 x, float64 y, float64 r = small_ball_radius, float64 v = BASICSPEED, float64 _angle = -PAI / 2, bool activity = true) : Circle(x, y, r)
 	{
 		speed = v;
 		angle = _angle;
@@ -118,6 +122,7 @@ private:
 	float64 angle;
 	bool activity;
 };
+
 
 float64 GetDistance(BasicShape a, BasicShape b);
 

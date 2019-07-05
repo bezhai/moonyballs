@@ -1,28 +1,26 @@
 // barriers.cpp -- barriers methods
 #include "barriers.h"
-#include <iostream>
 #include <ctime>
-#include <cmath>
 
-const double PI = atan(1.0) * 4;
+const float64 PI = atan(1.0) * 4;
 
 Barrier::~Barrier() {}
 
-Barrier::Barrier(double set_x, double set_y, int hp)
+Barrier::Barrier(float64 set_x, float64 set_y, int32 hp)
 {
 	this->x = set_x;
 	this->y = set_y;
 	this->hp = hp;
 }
 
-bool Barrier::IsCovered(const Barrier &br)
+bool Barrier::IsCovered(Barrier &br)
 {
-	double center_distance = sqrt(pow((this->x - br.x), 2.0) + pow((this->y - br.y), 2.0));
-	double sum_radius = this->calculate_radius + br.calculate_radius;
+	float64 center_distance = sqrt((this->x - br.x) * (this->x - br.x) + (this->y - br.y) * (this->y - br.y));
+	float64 sum_radius = this->calculate_radius + br.calculate_radius;
 	return sum_radius > center_distance;
 }
 
-CircleBarrier::CircleBarrier(double x, double y, double r, int hp) :Barrier(x, y, hp)
+CircleBarrier::CircleBarrier(float64 x, float64 y, float64 r, int32 hp) :Barrier(x, y, hp)
 {
 	this->radius = r;
 	this->SetCalculateRadius(r);
@@ -30,7 +28,7 @@ CircleBarrier::CircleBarrier(double x, double y, double r, int hp) :Barrier(x, y
 
 CircleBarrier::~CircleBarrier() {}
 
-RectangleBarrier::RectangleBarrier(double x, double y, double len, double wid, int hp, double rot) : Barrier(x, y, hp)
+RectangleBarrier::RectangleBarrier(float64 x, float64 y, float64 len, float64 wid, int32 hp, float64 rot) : Barrier(x, y, hp)
 {
 	this->length = len;
 	this->width = wid;
@@ -39,7 +37,7 @@ RectangleBarrier::RectangleBarrier(double x, double y, double len, double wid, i
 
 RectangleBarrier::~RectangleBarrier() {}
 
-TriangleBarrier::TriangleBarrier(double x, double y, double len, int hp, double rot) :Barrier(x, y, hp)
+TriangleBarrier::TriangleBarrier(float64 x, float64 y, float64 len, int32 hp, float64 rot) :Barrier(x, y, hp)
 {
 	this->length = len;
 	this->rotation = rot;
@@ -48,7 +46,7 @@ TriangleBarrier::TriangleBarrier(double x, double y, double len, int hp, double 
 
 TriangleBarrier::~TriangleBarrier() {}
 
-PentangoBarrier::PentangoBarrier(double x, double y, double r, int hp, double rot) :Barrier(x, y, hp)
+PentangoBarrier::PentangoBarrier(float64 x, float64 y, float64 r, int32 hp, float64 rot) :Barrier(x, y, hp)
 {
 	this->radius = r;
 	this->rotation = rot;
@@ -57,7 +55,7 @@ PentangoBarrier::PentangoBarrier(double x, double y, double r, int hp, double ro
 
 PentangoBarrier::~PentangoBarrier() {}
 
-HexagonBarrier::HexagonBarrier(double x,double y, double r,int hp, double rot) :Barrier(x, y, hp)
+HexagonBarrier::HexagonBarrier(float64 x,float64 y, float64 r,int32 hp, float64 rot) :Barrier(x, y, hp)
 {
 	this->radius = r;
 	this->rotation = rot;
@@ -66,14 +64,14 @@ HexagonBarrier::HexagonBarrier(double x,double y, double r,int hp, double rot) :
 
 HexagonBarrier::~HexagonBarrier() {}
 
-void TriangleBarrier::GetPos(vector<double> &points)
+void TriangleBarrier::GetPos(vector<float64> &points)
 {
-	double tempang;
+	float64 tempang;
 
-	double x = Barrier::GetX();
-	double y = Barrier::GetY();
-	double r = Barrier::GetCalculateRadius();
-	double rot = this->rotation;
+	float64 x = Barrier::GetX();
+	float64 y = Barrier::GetY();
+	float64 r = Barrier::GetCalculateRadius();
+	float64 rot = this->rotation;
 
 	tempang = rot + PI / 2;
 	points.push_back(x + r * cos(tempang));
@@ -89,15 +87,15 @@ void TriangleBarrier::GetPos(vector<double> &points)
 
 }
 
-void RectangleBarrier::GetPos(vector<double> &points)
+void RectangleBarrier::GetPos(vector<float64> &points)
 {
-	double delta = atan(this->width / this->length);
-	double tempang;
+	float64 delta = atan(this->width / this->length);
+	float64 tempang;
 
-	double x = Barrier::GetX();
-	double y = Barrier::GetY();
-	double r = Barrier::GetCalculateRadius();
-	double rot = this->rotation;
+	float64 x = Barrier::GetX();
+	float64 y = Barrier::GetY();
+	float64 r = Barrier::GetCalculateRadius();
+	float64 rot = this->rotation;
 
 	tempang = delta + rot;
 	points.push_back(x + r * cos(tempang));
@@ -116,14 +114,14 @@ void RectangleBarrier::GetPos(vector<double> &points)
 	points.push_back(y + r * sin(tempang));
 }
 
-void PentangoBarrier::GetPos(vector<double> &points)
+void PentangoBarrier::GetPos(vector<float64> &points)
 {
-	double tempang;
+	float64 tempang;
 
-	double x = Barrier::GetX();
-	double y = Barrier::GetY();
-	double r = Barrier::GetCalculateRadius();
-	double rot = this->rotation;
+	float64 x = Barrier::GetX();
+	float64 y = Barrier::GetY();
+	float64 r = Barrier::GetCalculateRadius();
+	float64 rot = this->rotation;
 
 	tempang = PI / 10 + rot;
 	points.push_back(x + r * cos(tempang));
@@ -146,14 +144,14 @@ void PentangoBarrier::GetPos(vector<double> &points)
 	points.push_back(y + r * sin(tempang));
 }
 
-void HexagonBarrier::GetPos(vector<double> &points)
+void HexagonBarrier::GetPos(vector<float64> &points)
 {
-	double tempang;
+	float64 tempang;
 
-	double x = Barrier::GetX();
-	double y = Barrier::GetY();
-	double r = Barrier::GetCalculateRadius();
-	double rot = this->rotation;
+	float64 x = Barrier::GetX();
+	float64 y = Barrier::GetY();
+	float64 r = Barrier::GetCalculateRadius();
+	float64 rot = this->rotation;
 
 	tempang = rot;
 	points.push_back(x + r * cos(tempang));
