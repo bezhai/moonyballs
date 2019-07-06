@@ -95,13 +95,12 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 	}
 }
 
-void MainControl::PlayerGenerate(vector<PlayerBall*> balls)
+void MainControl::PlayerGenerate(vector<PlayerBall*> &balls)
 {
-	PlayerBall ball = *new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 10.0f, - PAI / 3, true);
-	balls.push_back(&ball);
+	balls.push_back(new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 10.0f, -PAI / 3, true));
 }
 
-void MainControl::BarrierGenerate(vector<Barrier*> bars, int bar_num)
+void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 {
 	//生成障碍物对象
 	for (int i = 0; i < bar_num; i++)
@@ -138,7 +137,7 @@ void MainControl::BarrierGenerate(vector<Barrier*> bars, int bar_num)
 	}
 }
 
-void MainControl::PropGenerate(vector<Prop*> props, float64 coin_p, float64 table_p, float64 plus_p)
+void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 table_p, float64 plus_p)
 {
 	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
