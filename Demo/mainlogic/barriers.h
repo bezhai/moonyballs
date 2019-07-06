@@ -25,7 +25,7 @@ public:
 	inline float64 GetX() { return this->x; }
 	inline float64 GetY() { return this->y; }
 	inline int32 GetHp() { return this->hp; }
-	inline float64 GetCalculateRadius() { return this->calculate_radius; }
+	virtual inline float64 GetCalculateRadius() { return this->calculate_radius; }
 
 	inline void SetX(float64 set_x) { this->x = set_x; }
 	inline void SetY(float64 set_y) { this->y = set_y; }
@@ -40,6 +40,7 @@ public:
 	bool IsCovered(Barrier &br);
 	virtual void GetPos(vector<float64> &points) {}
 	int GetMode() { return mode_num; }
+	static inline int GetBarrierNum() { return num; }
 protected:
 	void SetMode(MODE num) { mode_num = num; }
 private:
@@ -48,14 +49,18 @@ private:
 	int32 hp;				// The times of being delete
 	float64 calculate_radius;	// The radius of circumcircle
 	MODE mode_num;
+	static int num;
 };
+
+int Barrier::num = 0;
+
 class CircleBarrier :public Barrier			// Circle
 {
 public:
 	CircleBarrier(float64 x, float64 y, float64 r, int32 hp = 1);
 	virtual ~CircleBarrier();
 
-	inline float64 GetRadius() { return this->radius; }
+	virtual inline float64 GetCalculateRadius() { return this->radius; }
 
 	inline void SetRadius(float64 r) { this->radius = r; }
 	virtual void SetCalculateRadius(float64 r) { Barrier::SetCalculateRadius(r); }
@@ -63,6 +68,8 @@ public:
 private:
 	float64 radius;
  };
+
+
 class RectangleBarrier :public Barrier
 {
 public:
@@ -110,7 +117,7 @@ public:
 	PentangoBarrier(float64 x, float64 y, float64 r, int32 hp = 1, float64 rot = 0.0);
 	virtual ~PentangoBarrier();
 
-	inline float64 GetRadius() { return this->radius; }
+	virtual inline float64 GetCalculateRadius() { return this->radius; }
 	inline float64 GetRot() { return this->rotation; }
 	
 	inline void SetLength(float64 radius) { this->radius = radius; }
@@ -128,7 +135,7 @@ public:
 	HexagonBarrier(float64 x, float64 y, float64 r, int32 hp = 1, float64 rot = 0.0);
 	virtual ~HexagonBarrier();
 
-	inline float64 GetRadius() { return this->radius; }
+	virtual inline float64 GetCalculateRadius() { return this->radius; }
 	inline float64 GetRot() { return this->rotation; }
 
 	inline void SetLength(float64 radius) { this->radius = radius; }

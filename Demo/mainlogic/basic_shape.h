@@ -93,8 +93,9 @@ public:
 	{
 		speed = v;
 		angle = _angle;
+		num++;
 	}
-	~PlayerBall() {}
+	~PlayerBall() { num--; }
 	void SetSpeed(float64 v)
 	{
 		speed = v;
@@ -106,23 +107,23 @@ public:
 	}
 	inline void SetActive() { activity = true; }
 	inline void SetInactve() { activity = false; }
-	inline float64 GetAngle()
-	{
-		return angle;
-	}
+	inline float64 GetAngle(){ return angle; }
 	inline float64 GetSpeed()
 	{
 		return speed;
 	}
 	inline bool GetActive(){ return activity;}
 	void Movement();
+	static int GetPlayerNum() { return num; }
 
 private:
 	float64 speed;
 	float64 angle;
 	bool activity;
+	static int num;
 };
 
+int PlayerBall::num = 0;
 
 float64 GetDistance(BasicShape a, BasicShape b);
 

@@ -154,11 +154,11 @@ void BarrierManager::DevideBarrier(Barrier* barrier, vector<Segment> &seg_list)
 	point_list.clear();
 }
 
-void CrashJudge::BallCrash(PlayerBall &play, CircleBarrier circle)
+void CrashJudge::BallCrash(PlayerBall &play, Barrier* circle)
 {
-	BasicShape _circle(circle.GetX(), circle.GetY());
+	BasicShape _circle(circle->GetX(), circle->GetY());
 	//如果距离小于等于半径之和，即相交
-	if (GetDistance(play, _circle) <= play.GetRadius() + circle.GetRadius())
+	if (GetDistance(play, _circle) <= play.GetRadius() + circle->GetCalculateRadius())
 	{
 		float64 tanline_angle;
 		//如果球心连线平行于y轴

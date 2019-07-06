@@ -10,14 +10,18 @@ const float64 plus_radius = 7.0f;
 class Prop : public Circle
 {
 public:
-	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) {}
-	~Prop() {}
+	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) { num++; }
+	~Prop() { num--; }
 	inline void SubHp(int32 num) { hp -= num; }
+	static inline int GetPropsNum() { return num; }
 protected:
 	inline void SetHp(int32 num) { hp = num; }
 private:
 	int hp;
+	static int num;
 };
+
+int Prop::num = 0;
 
 //定义了金币，包括面值
 class Coin : public Prop
