@@ -38,7 +38,7 @@ void MainControl::BallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vec
 }
 
 
-void MainControl::BarrierMovement(vector<Barrier*> bars, vector<Prop*> props)
+void MainControl::ItemsMovement(vector<Barrier*> bars, vector<Prop*> props)
 {
 	for (Barrier* bar : bars)
 	{
@@ -157,5 +157,13 @@ void MainControl::PropGenerate(vector<Prop*> props, float64 coin_p, float64 tabl
 		PlusSymbol temp(0, 0, plus_radius);
 		PropGenerate::GetcoordXY(temp);
 		props.push_back(&temp);
+	}
+}
+
+void MainControl::SetBeginAngle(vector<PlayerBall*> balls, double angle)
+{
+	for (PlayerBall* ball : balls)
+	{
+		ball->SetAngle(angle);
 	}
 }
