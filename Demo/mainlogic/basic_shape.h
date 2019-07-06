@@ -15,7 +15,7 @@
 #define ENDY     0
 
 #define BASICSPEED 10.0f
-#define TIME 0.02f
+#define TIME 0.05f
 #define ACCELERATION -5.0f
 #define INFINITE_S 0.005f
 #define PAI 3.1415926

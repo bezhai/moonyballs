@@ -23,7 +23,11 @@ void MainControl::BallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vec
 				CrashJudge::BallCrash(*ball, bar);
 			}
 		}
-
+		//如果没有出界，则继续按原计划运动，否则执行终止运动
+		if (CrashJudge::BoundaryCrash(ball) || ball->GetActive() == false)
+		{
+			CrashJudge::BallEndMove(ball);
+		}
 		if (ball->GetActive())
 			ball->Movement();
 		for (Prop* prop : props)
@@ -97,7 +101,7 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 
 void MainControl::PlayerGenerate(vector<PlayerBall*> &balls)
 {
-	balls.push_back(new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 10.0f, -PAI / 3, true));
+	balls.push_back(new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 40.0f, -PAI / 3, true));
 }
 
 void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
@@ -159,7 +163,7 @@ void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 tab
 	}
 }
 
-void MainControl::SetBeginAngle(vector<PlayerBall*> balls, double angle)
+void MainControl::SetBeginAngle(vector<PlayerBall*> &balls, double angle)
 {
 	for (PlayerBall* ball : balls)
 	{

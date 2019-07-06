@@ -45,13 +45,13 @@ namespace CrashJudge
 	//判断是否碰撞线段，如果是返回true，否则返回false
 	bool SegmentCrash(Segment seg, PlayerBall &play);
 	//判断是否触碰边界，只要不是底边则改变方向，返回false，否则返回true
-	bool BoundaryCrash(PlayerBall &play);
+	bool BoundaryCrash(PlayerBall* play);
 	//判断是否碰撞到球，并改变方向
 	void BallCrash(PlayerBall &play, Barrier* circle);
 	//角度公式需要调整障碍物向量的方向，当角度差小于pai/2时，不需要反向
 	float64 AdjustAngle(float64 barri_angle, float64 ball_angle);
 	//当触底时，小球的运动方程
-	void BallEndMove(PlayerBall &play);
+	void BallEndMove(PlayerBall* play);
 	//确定小球所在层数，一般为两层，返回上面那层
 	int GetFloor(PlayerBall play);
 	//关于道具与小球碰撞发生的事件

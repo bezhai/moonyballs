@@ -80,12 +80,7 @@ float64 CrashJudge::AdjustAngle(float64 barri_angle, float64 ball_angle)
 
 int32 CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 {
-	//如果没有出界，则继续按原计划运动，否则执行终止运动
-	if (CrashJudge::BoundaryCrash(play) || play.GetActive() == false)
-	{
-		BallEndMove(play);
-		return 0;
-	}
+	
 	//判断碰撞到障碍物
 	for (auto &seg : seg_list)
 	{
@@ -108,35 +103,35 @@ int32 CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 	return 0;
 }
 
-bool CrashJudge::BoundaryCrash(PlayerBall &play)
+bool CrashJudge::BoundaryCrash(PlayerBall* play)
 {
 	BasicShape _start(STARTX, STARTY);
 	BasicShape _end(ENDX, ENDY);
 	//当小球触碰到x边界时
-	if (play.GetcoordX() <= _start.GetcoordX() || play.GetcoordX() >= _end.GetcoordX())
+	if (play->GetcoordX() <= _start.GetcoordX() || play->GetcoordX() >= _end.GetcoordX())
 	{
-		float64 _angle = play.GetAngle();
+		float64 _angle = play->GetAngle();
 		if (_angle >= 0)
-			play.SetAngle(PAI - _angle);
+			play->SetAngle(PAI - _angle);
 		else
-			play.SetAngle(-_angle - PAI);
+			play->SetAngle(-_angle - PAI);
 	}
 	//当小球触碰到y上边界时
-	if (play.GetcoordY() >= _end.GetcoordY())
+	if (play->GetcoordY() >= _end.GetcoordY())
 	{
-		play.SetAngle(-play.GetAngle());
+		play->SetAngle(-play->GetAngle());
 	}
 	//当小球触碰到下边界时，返回true
-	return (play.GetcoordY() <= _end.GetcoordY());
+	return (play->GetcoordY() <= _end.GetcoordY());
 }
 
-void CrashJudge::BallEndMove(PlayerBall &play)
+void CrashJudge::BallEndMove(PlayerBall* play)
 {
-	play.SetInactve();
-	play.SetAngle(-PAI / 2);
-	play.SetcoordX(ENDX / 2);
-	play.SetcoordY(ENDY);
-	play.SetSpeed(BASICSPEED);
+	play->SetInactve();
+	play->SetAngle(-PAI / 2);
+	play->SetcoordX(ENDX / 2);
+	play->SetcoordY(ENDY);
+	play->SetSpeed(BASICSPEED);
 }
 
 void BarrierManager::DevideBarrier(Barrier* barrier, vector<Segment> &seg_list)

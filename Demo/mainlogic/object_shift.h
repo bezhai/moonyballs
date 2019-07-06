@@ -17,7 +17,7 @@ namespace MainControl
 	*其中bars为存储障碍物对象地址的向量
 	*已经集成减少所有对象hp
 	*/
-	void SetBeginAngle(vector<PlayerBall*>, double angle);
+	void SetBeginAngle(vector<PlayerBall*>&, double angle);
 	void ItemsMovement(vector<Barrier*>, vector<Prop*>);
 	int GetColor(Barrier*, COLOR);
 	void PlayerGenerate(vector<PlayerBall*>&);//生成一次小球
