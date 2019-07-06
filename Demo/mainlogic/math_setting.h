@@ -18,5 +18,8 @@ typedef double float64;
 #define phymin fmin
 #define phymax fmax
 
+int ProbabilityRandom(int a, int b, float64 a_pro);
+int IntRandom(int a, int b);
+
 #endif // !MATH_SETTING_H
 

@@ -59,4 +59,9 @@ private:
 	int hp;
 };
 
+namespace PropGenerate
+{
+	void GetcoordXY();//生成道具
+}
+
 #endif // !PROP_H

@@ -17,7 +17,7 @@ namespace Generate
 	//判断是否触边，是则返回true
 	bool JudgeBoundary(Barrier* br);
 	//均匀分布生成坐标，并且判断是否满足条件，满足条件再输出
-	void GcoordXY(Barrier* barr, Barrier** barriers, int32 barr_num);
+	void GcoordXY(Barrier* barr, vector<Barrier*> bars);
 }
 
 namespace BarrierMove

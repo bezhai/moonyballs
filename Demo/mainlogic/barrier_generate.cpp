@@ -22,7 +22,7 @@ bool Generate::JudgeBoundary(Barrier* barrier)
 	return false;
 }
 
-void Generate::GcoordXY(Barrier* barr, Barrier** barriers, int32 barr_num)
+void Generate::GcoordXY(Barrier* barr, vector<Barrier*> bars)
 {
 	std::default_random_engine e(time(0));
 	std::uniform_real_distribution<float64> croodX(STARTX, ENDX);
@@ -34,9 +34,9 @@ void Generate::GcoordXY(Barrier* barr, Barrier** barriers, int32 barr_num)
 		barr->SetX(croodX(e));
 		barr->SetY(croodY(e));
 		dream = false;
-		for (int i = 0; i < barr_num; i++)
+		for (Barrier* bar : bars)
 		{
-			if (barr->IsCovered(*barriers[i]))
+			if (barr->IsCovered(*bar))
 			{
 				dream = true;
 				break;

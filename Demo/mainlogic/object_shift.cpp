@@ -1,37 +1,41 @@
 #include "object_shift.h"
 #include <ctime>
 
-void MainControl::SingleBallCalc(PlayerBall &ball, Barrier** bars, Prop** circles)
+void MainControl::SingleBallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vector<Prop*> props)
 {
-	for (int i = 0; i < Barrier::GetBarrierNum(); i++)
+	for (PlayerBall* &ball : balls)
 	{
-		if (bars[i]->GetMode() != CIRCLE)
+		for (Barrier* &bar : bars)
 		{
-			int temp = BarrierMove::GetFloor(bars[i]) - CrashJudge::GetFloor(ball);
-			if (temp == 0 || temp == -1)
+			if (bar->GetMode() != CIRCLE)
 			{
-				vector<Segment> seg_list;
-				BarrierManager::DevideBarrier(bars[i], seg_list);
-				bars[i]->SetHp(CrashJudge::SetAngle(seg_list, ball));//里面是判断碰撞的函数，将减少hp返回给SetHp
-				seg_list.clear();
+				int temp = BarrierMove::GetFloor(bar) - CrashJudge::GetFloor(*ball);
+				if (temp == 0 || temp == -1)
+				{
+					vector<Segment> seg_list;
+					BarrierManager::DevideBarrier(bar, seg_list);
+					bar->SetHp(CrashJudge::SetAngle(seg_list, *ball));//里面是判断碰撞的函数，将减少hp返回给SetHp
+					seg_list.clear();
+				}
+			}
+			else
+			{
+				CrashJudge::BallCrash(*ball, bar);
 			}
 		}
-		else
-		{
-			CrashJudge::BallCrash(ball, bars[i]);
-		}
-	}
 
-	if (ball.GetActive())
-		ball.Movement();
-	for (int i = 0; i < Prop::GetPropsNum(); i++)
-	{
-		if (GetDistance(ball, *circles[i]) <= ball.GetRadius() + circles[i]->GetRadius())
-			circles[i]->SubHp(1);
+		if (ball->GetActive())
+			ball->Movement();
+		for (Prop* prop : props)
+		{
+			if (GetDistance(*ball, *prop) <= ball->GetRadius() + prop->GetRadius())
+				prop->SubHp(1);
+		}
 	}
 }
 
-void MainControl::BarrierMovement(Barrier** bars, Prop** circles)
+
+void MainControl::BarrierMovement(vector<Barrier*> bars, vector<Prop*> props)
 {
 	for (int32 i = 0; i < Barrier::GetBarrierNum() ; i++)
 	{
@@ -40,7 +44,7 @@ void MainControl::BarrierMovement(Barrier** bars, Prop** circles)
 
 	for (int32 i = 0; i < Prop::GetPropsNum(); i++)
 	{
-		circles[i]->AddcoordY(per_height);
+		props[i]->AddcoordY(per_height);
 	}
 }
 
@@ -91,41 +95,54 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 	}
 }
 
-PlayerBall MainControl::PlayerGenerate()
+void MainControl::PlayerGenerate(vector<PlayerBall*> balls)
 {
 	PlayerBall ball = *new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 10.0f, - PAI / 3, true);
-	return ball;
+	balls.push_back(&ball);
 }
 
-Barrier* MainControl::BarrierGenerate(Barrier** bars)
+void MainControl::BarrierGenerate(vector<Barrier*> bars, int bar_num)
 {
-	MODE mode_num = (MODE)(time(0) % 5);
-	if (mode_num == CIRCLE)
+	//生成障碍物对象
+	for (int i = 0; i < bar_num; i++)
 	{
-		CircleBarrier temp(0, 0, 0, 1);
-		temp.SetRadius(Generate::GRadius());
-		Generate::GcoordXY(&temp, bars, Barrier::GetBarrierNum());
-		return (Barrier *)&temp;
+		MODE mode_num = (MODE)(time(0) % 5);
+		if (mode_num == CIRCLE)
+		{
+			CircleBarrier temp(0, 0, 0, 1);
+			temp.SetRadius(Generate::GRadius());
+			Generate::GcoordXY(&temp, bars);
+			bars.push_back(&temp);
+		}
+		else if (mode_num == TRIANGLE)
+		{
+			TriangleBarrier temp(0, 0, 0, 1);
+			temp.SetCalculateRadius(Generate::GRadius());
+			Generate::GcoordXY(&temp, bars);
+			bars.push_back(&temp);
+		}
+		else if (mode_num == PENTAGON)
+		{
+			PentangoBarrier temp(0, 0, 0, 1);
+			temp.SetCalculateRadius(Generate::GRadius());
+			Generate::GcoordXY(&temp, bars);
+			bars.push_back(&temp);
+		}
+		else if (mode_num == RECTANGLE)
+		{
+			RectangleBarrier temp(0, 0, 10, 10, 2);
+			temp.SetCalculateRadius(Generate::GRadius());
+			Generate::GcoordXY(&temp, bars);
+			bars.push_back(&temp);
+		}
 	}
-	if (mode_num == TRIANGLE)
+}
+
+void MainControl::PropGenerate(vector<Prop*>, float64 coin_p, float64 table_p, float64 plus_p)
+{
+	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
-		TriangleBarrier temp(0, 0, 0, 1);
-		temp.SetCalculateRadius(Generate::GRadius());
-		Generate::GcoordXY(&temp, bars, Barrier::GetBarrierNum());
-		return (Barrier *)&temp;
-	}
-	if (mode_num == PENTAGON)
-	{
-		PentangoBarrier temp(0, 0, 0, 1);
-		temp.SetCalculateRadius(Generate::GRadius());
-		Generate::GcoordXY(&temp, bars, Barrier::GetBarrierNum());
-		return (Barrier *)&temp;
-	}
-	if (mode_num == RECTANGLE)
-	{
-		RectangleBarrier temp(0, 0, 10, 10, 2);
-		temp.SetCalculateRadius(Generate::GRadius());
-		Generate::GcoordXY(&temp, bars, Barrier::GetBarrierNum());
-		return (Barrier *)&temp;
+		Coin temp(60, 10, coin_radius, 1);
+
 	}
 }
