@@ -8,6 +8,7 @@
 
 #include "basic_shape.h"
 #include "barriers.h"
+#include "prop.h"
 #include <vector>  
 
 
@@ -53,6 +54,8 @@ namespace CrashJudge
 	void BallEndMove(PlayerBall &play);
 	//确定小球所在层数，一般为两层，返回上面那层
 	int GetFloor(PlayerBall play);
+	//关于道具与小球碰撞发生的事件
+	void PropCrashEvent(PlayerBall*, Prop*);
 }
 
 namespace BarrierManager

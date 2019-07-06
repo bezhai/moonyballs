@@ -40,7 +40,6 @@ public:
 	bool IsCovered(Barrier &br);
 	virtual void GetPos(vector<float64> &points) {}
 	int GetMode() { return mode_num; }
-	static inline int GetBarrierNum() { return num; }
 protected:
 	void SetMode(MODE num) { mode_num = num; }
 private:
@@ -49,10 +48,8 @@ private:
 	int32 hp;				// The times of being delete
 	float64 calculate_radius;	// The radius of circumcircle
 	MODE mode_num;
-	static int num;
 };
 
-int Barrier::num = 0;
 
 class CircleBarrier :public Barrier			// Circle
 {

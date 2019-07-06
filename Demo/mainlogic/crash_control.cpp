@@ -194,3 +194,19 @@ int CrashJudge::GetFloor(PlayerBall play)
 	}
 	return floor;
 }
+
+void CrashJudge::PropCrashEvent(PlayerBall* ball, Prop* prop)
+{
+	if (prop->GetMode() == TURNTABLE)
+	{
+		ball->SetRadius(big_ball_radius);
+	}
+	else if(prop->GetMode() == PLUSSYMBOL)
+	{
+		ball->SetRadius(small_ball_radius);
+	}
+	else
+	{
+		mooey += ((Coin *)prop)->GetMoney();
+	}
+}

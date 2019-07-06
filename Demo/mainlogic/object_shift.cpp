@@ -1,7 +1,7 @@
 #include "object_shift.h"
 #include <ctime>
 
-void MainControl::SingleBallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vector<Prop*> props)
+void MainControl::BallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vector<Prop*> props)
 {
 	for (PlayerBall* &ball : balls)
 	{
@@ -29,7 +29,10 @@ void MainControl::SingleBallCalc(vector<PlayerBall*> balls, vector<Barrier*> bar
 		for (Prop* prop : props)
 		{
 			if (GetDistance(*ball, *prop) <= ball->GetRadius() + prop->GetRadius())
+			{
 				prop->SubHp(1);
+				CrashJudge::PropCrashEvent(ball, prop);
+			}
 		}
 	}
 }
@@ -37,23 +40,22 @@ void MainControl::SingleBallCalc(vector<PlayerBall*> balls, vector<Barrier*> bar
 
 void MainControl::BarrierMovement(vector<Barrier*> bars, vector<Prop*> props)
 {
-	for (int32 i = 0; i < Barrier::GetBarrierNum() ; i++)
+	for (Barrier* bar : bars)
 	{
-		bars[i]->AddY(per_height);
+		bar->AddY(per_height);
 	}
-
-	for (int32 i = 0; i < Prop::GetPropsNum(); i++)
+	for (Prop* prop : props)
 	{
-		props[i]->AddcoordY(per_height);
+		prop->AddcoordY(per_height);
 	}
 }
 
 int MainControl::GetColor(Barrier* bar, COLOR color)
 {
+	int hp = bar->GetHp();
 	switch (color)
 	{
 	case RED:
-		int hp = bar->GetHp();
 		if (hp <= 10)
 		{
 			return 0;
@@ -67,7 +69,6 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 			return 250;
 		}
 	case GREEN:
-		int hp = bar->GetHp();
 		if (hp <= 20)
 		{
 			return 250;
@@ -81,7 +82,6 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 			return 0;
 		}
 	case BLUE:
-		int hp = bar->GetHp();
 		if (hp <= 10)
 		{
 			return 100 - 10 * hp;
@@ -91,7 +91,7 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 			return 0;
 		}
 	default:
-		break;
+		return 0;
 	}
 }
 
@@ -138,11 +138,24 @@ void MainControl::BarrierGenerate(vector<Barrier*> bars, int bar_num)
 	}
 }
 
-void MainControl::PropGenerate(vector<Prop*>, float64 coin_p, float64 table_p, float64 plus_p)
+void MainControl::PropGenerate(vector<Prop*> props, float64 coin_p, float64 table_p, float64 plus_p)
 {
 	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
-		Coin temp(60, 10, coin_radius, 1);
-
+		Coin temp(0, 0, coin_radius, 1);
+		PropGenerate::GetcoordXY(temp);
+		props.push_back(&temp);
+	}
+	for (int i = 0; i < ProbabilityRandom(1, 0, table_p); i++)
+	{
+		Turntable temp(0, 0, turntable_radius);
+		PropGenerate::GetcoordXY(temp);
+		props.push_back(&temp);
+	}
+	for (int i = 0; i < ProbabilityRandom(1, 0, plus_p); i++)
+	{
+		PlusSymbol temp(0, 0, plus_radius);
+		PropGenerate::GetcoordXY(temp);
+		props.push_back(&temp);
 	}
 }

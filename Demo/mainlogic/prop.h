@@ -7,21 +7,25 @@ const float64 coin_radius = 6.0f;
 const float64 turntable_radius = 10.f;
 const float64 plus_radius = 7.0f;
 
+static int mooey;
+
+enum PROPCLASS
+{COIN, TURNTABLE, PLUSSYMBOL};
+
 class Prop : public Circle
 {
 public:
-	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) { num++; }
-	~Prop() { num--; }
+	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) { }
+	~Prop() { }
 	inline void SubHp(int32 num) { hp -= num; }
-	static inline int GetPropsNum() { return num; }
+	inline int GetMode() { return mode; }
 protected:
+	inline void SetMode(PROPCLASS p) { mode = p; }
 	inline void SetHp(int32 num) { hp = num; }
 private:
 	int hp;
-	static int num;
+	PROPCLASS mode;
 };
-
-int Prop::num = 0;
 
 //定义了金币，包括面值
 class Coin : public Prop
@@ -31,7 +35,9 @@ public:
 	{
 		coin_value = value;
 		SetHp(1);
+		SetMode(COIN);
 	}
+	int GetMoney() { return coin_value; }
 	virtual ~Coin() {}
 private:
 	int coin_value;
@@ -43,6 +49,7 @@ public:
 	Turntable(float64 x, float64 y, float64 r = turntable_radius) : Prop(x, y, r)
 	{
 		SetHp(3);
+		SetMode(TURNTABLE);
 	}
 	~Turntable() {}
 };
@@ -53,6 +60,7 @@ public:
 	PlusSymbol(float64 x, float64 y, float64 r = plus_radius) : Prop(x, y, r)
 	{
 		SetHp(3);
+		SetMode(PLUSSYMBOL);
 	}
 	~PlusSymbol() {}
 private:
@@ -61,7 +69,7 @@ private:
 
 namespace PropGenerate
 {
-	void GetcoordXY();//生成道具
+	void GetcoordXY(Prop&);//生成道具
 }
 
 #endif // !PROP_H

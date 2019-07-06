@@ -80,6 +80,7 @@ public:
 		SetcoordY(b.GetcoordY());
 		this->radius = b.radius;
 	}
+	inline void SetRadius(float64 r) { radius = r; }
 	inline float64 GetRadius(){ return radius;}
 private:
 	float64 radius;
@@ -93,18 +94,10 @@ public:
 	{
 		speed = v;
 		angle = _angle;
-		num++;
 	}
-	~PlayerBall() { num--; }
-	void SetSpeed(float64 v)
-	{
-		speed = v;
-	}
-	void SetAngle(float64 _angle)
-	{
-		angle = _angle;
-
-	}
+	~PlayerBall() { }
+	inline void SetSpeed(float64 v){ speed = v; }
+	inline void SetAngle(float64 _angle){ angle = _angle; }
 	inline void SetActive() { activity = true; }
 	inline void SetInactve() { activity = false; }
 	inline float64 GetAngle(){ return angle; }
@@ -114,16 +107,13 @@ public:
 	}
 	inline bool GetActive(){ return activity;}
 	void Movement();
-	static int GetPlayerNum() { return num; }
 
 private:
 	float64 speed;
 	float64 angle;
 	bool activity;
-	static int num;
 };
 
-int PlayerBall::num = 0;
 
 float64 GetDistance(BasicShape a, BasicShape b);
 

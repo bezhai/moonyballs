@@ -26,7 +26,7 @@ void Generate::GcoordXY(Barrier* barr, vector<Barrier*> bars)
 {
 	std::default_random_engine e(time(0));
 	std::uniform_real_distribution<float64> croodX(STARTX, ENDX);
-	std::uniform_real_distribution<float64> croodY(ENDY, STARTY);
+	std::uniform_real_distribution<float64> croodY(ENDY, ENDY + per_height);
 
 	bool dream = false;//≈–∂œ «∑Òª·÷ÿµ˛
 	do
