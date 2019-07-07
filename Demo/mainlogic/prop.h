@@ -1,7 +1,7 @@
-#include "basic_shape.h"
-
 #ifndef PROP_H
 #define PROP_H
+
+#include "basic_shape.h"
 
 const float64 coin_radius = 6.0f;
 const float64 turntable_radius = 10.f;
@@ -15,15 +15,17 @@ enum PROPCLASS
 class Prop : public Circle
 {
 public:
-	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) { }
+	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) { floor = 0; }
 	~Prop() { }
 	inline void SubHp(int32 num) { hp -= num; }
 	inline int GetMode() { return mode; }
+	inline void AddFloor() { floor++; }
 protected:
 	inline void SetMode(PROPCLASS p) { mode = p; }
 	inline void SetHp(int32 num) { hp = num; }
 private:
 	int hp;
+	int floor;
 	PROPCLASS mode;
 };
 
@@ -63,8 +65,6 @@ public:
 		SetMode(PLUSSYMBOL);
 	}
 	~PlusSymbol() {}
-private:
-	int hp;
 };
 
 namespace PropGenerate

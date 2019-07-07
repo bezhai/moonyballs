@@ -17,7 +17,7 @@
 #define BASICSPEED 10.0f
 #define TIME 0.05f
 #define ACCELERATION -5.0f
-#define INFINITE_S 0.005f
+#define INFINITE_S 0.0025f
 #define PAI 3.1415926
 
 //一共有十层，每一层的高度为1/10
@@ -38,13 +38,6 @@ public:
 		coordY = y;
 	}
 	~BasicShape() {}
-	virtual BasicShape operator + (BasicShape b)
-	{
-		BasicShape a;
-		a.coordX = coordX + b.coordX;
-		a.coordY = coordY + b.coordY;
-		return a;
-	}
     virtual void operator = (BasicShape b)
 	{
 		coordX = b.coordX;
@@ -56,8 +49,6 @@ public:
 	inline void AddcoordY(float64 y){ coordY += y;}
 	inline float64 GetcoordX(){ return coordX;}
 	inline float64 GetcoordY(){ return coordY;}
-	//获取两点间距离
-	friend float64 GetDistance(BasicShape a, BasicShape b);
 };
 
 //定义了圆，包括半径
@@ -67,13 +58,6 @@ public:
 	Circle() {}
 	Circle(float64 x, float64 y, float64 r) : BasicShape(x, y){ radius = r;}
 	~Circle() {}
-	virtual Circle operator + (Circle b)
-	{
-		Circle a;
-		a.SetcoordX(this->GetcoordX() + b.GetcoordX());
-		a.SetcoordY(this->GetcoordY() + b.GetcoordY());
-		return a;
-	}
 	virtual void operator = (Circle b)
 	{
 		SetcoordX(b.GetcoordX());
@@ -81,7 +65,7 @@ public:
 		this->radius = b.radius;
 	}
 	inline void SetRadius(float64 r) { radius = r; }
-	inline float64 GetRadius(){ return radius;}
+	inline float64 GetRadius(){ return radius; }
 private:
 	float64 radius;
 };
@@ -90,16 +74,17 @@ private:
 class PlayerBall : public Circle
 {
 public:
-	PlayerBall(float64 x, float64 y, float64 r = small_ball_radius, float64 v = BASICSPEED, float64 _angle = -PAI / 2, bool activity = true) : Circle(x, y, r)
+	PlayerBall(float64 x, float64 y, float64 r, float64 v, float64 _angle, bool activity) : Circle(x, y, r)
 	{
 		speed = v;
 		angle = _angle;
+		this->activity = activity;
 	}
 	~PlayerBall() { }
 	inline void SetSpeed(float64 v){ speed = v; }
 	inline void SetAngle(float64 _angle){ angle = _angle; }
 	inline void SetActive() { activity = true; }
-	inline void SetInactve() { activity = false; }
+	inline void SetInactive() { activity = false; }
 	inline float64 GetAngle(){ return angle; }
 	inline float64 GetSpeed()
 	{
@@ -113,9 +98,6 @@ private:
 	float64 angle;
 	bool activity;
 };
-
-
-float64 GetDistance(BasicShape a, BasicShape b);
 
 #endif // !BASIC_SHAPE_H
 

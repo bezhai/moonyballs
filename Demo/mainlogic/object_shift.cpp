@@ -1,41 +1,52 @@
-#include "object_shift.h"
 #include <ctime>
+#include "object_shift.h"
 
 void MainControl::BallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vector<Prop*> props)
 {
 	for (PlayerBall* &ball : balls)
 	{
-		for (Barrier* &bar : bars)
+		if (ball->GetActive() == true)
 		{
-			if (bar->GetMode() != CIRCLE)
+			if (bars.size() != 0)
 			{
-				int temp = BarrierMove::GetFloor(bar) - CrashJudge::GetFloor(*ball);
-				if (temp == 0 || temp == -1)
+				for (Barrier* &bar : bars)
 				{
-					vector<Segment> seg_list;
-					BarrierManager::DevideBarrier(bar, seg_list);
-					bar->SetHp(CrashJudge::SetAngle(seg_list, *ball));//里面是判断碰撞的函数，将减少hp返回给SetHp
-					seg_list.clear();
+					if (bar->GetMode() != CIRCLE)
+					{
+						int temp = bar->GetFloor() - CrashJudge::GetFloor(*ball);
+						if (temp == 0 || temp == -1)
+						{
+							vector<Segment> seg_list;
+							BarrierManager::DevideBarrier(bar, seg_list);
+							bar->Damaged(CrashJudge::SetAngle(seg_list, *ball));//里面是判断碰撞的函数，将减少hp返回给SetHp
+							seg_list.clear();
+						}
+					}
+					else
+					{
+						bar->Damaged(CrashJudge::BallCrash(*ball, bar));
+					}
 				}
 			}
-			else
+
+			//如果没有出界，则继续按原计划运动，否则执行终止运动
+			if (CrashJudge::BoundaryCrash(ball))
 			{
-				CrashJudge::BallCrash(*ball, bar);
+				CrashJudge::BallEndMove(ball);
 			}
-		}
-		//如果没有出界，则继续按原计划运动，否则执行终止运动
-		if (CrashJudge::BoundaryCrash(ball) || ball->GetActive() == false)
-		{
-			CrashJudge::BallEndMove(ball);
-		}
-		if (ball->GetActive())
+
 			ball->Movement();
-		for (Prop* prop : props)
-		{
-			if (GetDistance(*ball, *prop) <= ball->GetRadius() + prop->GetRadius())
+
+			if (props.size() != 0)
 			{
-				prop->SubHp(1);
-				CrashJudge::PropCrashEvent(ball, prop);
+				for (Prop* prop : props)
+				{
+					if (CrashJudge::GetDistance(ball, prop) <= ball->GetRadius() + prop->GetRadius())
+					{
+						prop->SubHp(1);
+						CrashJudge::PropCrashEvent(ball, prop);
+					}
+				}
 			}
 		}
 	}
@@ -44,13 +55,21 @@ void MainControl::BallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vec
 
 void MainControl::ItemsMovement(vector<Barrier*> bars, vector<Prop*> props)
 {
-	for (Barrier* bar : bars)
+	if (bars.size() != 0)
 	{
-		bar->AddY(per_height);
+		for (Barrier* bar : bars)
+		{
+			bar->AddFloor();
+			bar->AddY(per_height);
+		}
 	}
-	for (Prop* prop : props)
+	if (props.size() != 0)
 	{
-		prop->AddcoordY(per_height);
+		for (Prop* prop : props)
+		{
+			prop->AddFloor();
+			prop->AddcoordY(per_height);
+		}
 	}
 }
 
@@ -109,32 +128,32 @@ void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 	//生成障碍物对象
 	for (int i = 0; i < bar_num; i++)
 	{
-		MODE mode_num = (MODE)(time(0) % 5);
+		MODE mode_num = (MODE)(IntRandom(0, 3));
 		if (mode_num == CIRCLE)
 		{
-			CircleBarrier temp(0, 0, 0, 1);
-			temp.SetRadius(Generate::GRadius());
+			CircleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
+			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == TRIANGLE)
 		{
-			TriangleBarrier temp(0, 0, 0, 1);
-			temp.SetCalculateRadius(Generate::GRadius());
+			TriangleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
+			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == PENTAGON)
 		{
-			PentangoBarrier temp(0, 0, 0, 1);
-			temp.SetCalculateRadius(Generate::GRadius());
+			PentangoBarrier temp(0, 0, 9, Generate::GRadius(), 1);
+			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}
-		else if (mode_num == RECTANGLE)
+		else if (mode_num == SQUARE)
 		{
-			RectangleBarrier temp(0, 0, 10, 10, 2);
-			temp.SetCalculateRadius(Generate::GRadius());
+			SquareBarrier temp(0, 0, 10, Generate::GRadius(), 0);
+			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}

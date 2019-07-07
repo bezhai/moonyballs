@@ -6,46 +6,30 @@
 float64 Generate::GRadius()
 {
 	std::default_random_engine e(time(0));
-	std::uniform_real_distribution<float64> u(min_radius, max_radius);
+	std::uniform_real_distribution<float64> u(per_height * SMALLFACTION, per_height * BIGFACTION);
 	return u(e);
 }
 
-bool Generate::JudgeBoundary(Barrier* barrier)
-{
-	std::vector<float64> points;
-	barrier->GetPos(points);
-	for (int i = 0; i < points.size() / 2; i++)
-	{
-		if (points[2 * i] <= STARTX || points[2 * i] >= ENDX || points[2 * i + 1] <= ENDY || points[2 * i + 1] >= STARTY)
-			return true;
-	}
-	return false;
-}
 
 void Generate::GcoordXY(Barrier* barr, vector<Barrier*> bars)
 {
+	float64 r = barr->GetCalculateRadius();
 	std::default_random_engine e(time(0));
-	std::uniform_real_distribution<float64> croodX(STARTX, ENDX);
-	std::uniform_real_distribution<float64> croodY(ENDY, ENDY + per_height);
+	std::uniform_real_distribution<float64> croodX(STARTX + r, ENDX - r);
+	std::uniform_real_distribution<float64> croodY(ENDY + r, ENDY + per_height - r);
 
-	bool dream = false;//判断是否会重叠
-	do
+	while (1)
 	{
 		barr->SetX(croodX(e));
 		barr->SetY(croodY(e));
-		dream = false;
+		if (bars.size() == 0)
+		{
+			return;
+		}
 		for (Barrier* bar : bars)
 		{
-			if (barr->IsCovered(*bar))
-			{
-				dream = true;
-				break;
-			}
+			if (!barr->IsCovered(*bar))
+				return;
 		}
-	} while (JudgeBoundary(barr) || dream);
-}
-
-int BarrierMove::GetFloor(Barrier* barrier)
-{
-	return (int)(barrier->GetY() / per_height);
+	}//后期需要增加错误处理
 }

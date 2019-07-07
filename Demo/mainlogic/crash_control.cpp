@@ -3,8 +3,8 @@
 float64 Segment::CalcDistance(BasicShape point)
 {
 	//计算点到线段端点的距离
-	float64 d1 = GetDistance(point, BasicShape(x1, y1));
-	float64 d2 = GetDistance(point, BasicShape(x2, y2));
+	float64 d1 = CrashJudge::GetDistance(&point, &BasicShape(x1, y1));
+	float64 d2 = CrashJudge::GetDistance(&point, &BasicShape(x2, y2));
 
 	//如果x2-x1=0，那么执行下列选择
 	if (phyabs(x2 - x1) <= INFINITE_S)
@@ -105,10 +105,9 @@ int32 CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 
 bool CrashJudge::BoundaryCrash(PlayerBall* play)
 {
-	BasicShape _start(STARTX, STARTY);
-	BasicShape _end(ENDX, ENDY);
+	float64 r = play->GetRadius();
 	//当小球触碰到x边界时
-	if (play->GetcoordX() <= _start.GetcoordX() || play->GetcoordX() >= _end.GetcoordX())
+	if (play->GetcoordX() <= STARTX + r || play->GetcoordX() >= ENDX - r)
 	{
 		float64 _angle = play->GetAngle();
 		if (_angle >= 0)
@@ -117,20 +116,20 @@ bool CrashJudge::BoundaryCrash(PlayerBall* play)
 			play->SetAngle(-_angle - PAI);
 	}
 	//当小球触碰到y上边界时
-	if (play->GetcoordY() >= _end.GetcoordY())
+	if (play->GetcoordY() >= STARTY - r && play->GetAngle() >= 0)
 	{
 		play->SetAngle(-play->GetAngle());
 	}
 	//当小球触碰到下边界时，返回true
-	return (play->GetcoordY() <= _end.GetcoordY());
+	return (play->GetcoordY() <= (ENDY + r));
 }
 
 void CrashJudge::BallEndMove(PlayerBall* play)
 {
-	play->SetInactve();
+	play->SetInactive();
 	play->SetAngle(-PAI / 2);
 	play->SetcoordX(ENDX / 2);
-	play->SetcoordY(ENDY);
+	play->SetcoordY(STARTY);
 	play->SetSpeed(BASICSPEED);
 }
 
@@ -149,11 +148,11 @@ void BarrierManager::DevideBarrier(Barrier* barrier, vector<Segment> &seg_list)
 	point_list.clear();
 }
 
-void CrashJudge::BallCrash(PlayerBall &play, Barrier* circle)
+int CrashJudge::BallCrash(PlayerBall &play, Barrier* circle)
 {
 	BasicShape _circle(circle->GetX(), circle->GetY());
 	//如果距离小于等于半径之和，即相交
-	if (GetDistance(play, _circle) <= play.GetRadius() + circle->GetCalculateRadius())
+	if (CrashJudge::GetDistance(&play, &_circle) <= play.GetRadius() + circle->GetCalculateRadius())
 	{
 		float64 tanline_angle;
 		//如果球心连线平行于y轴
@@ -172,7 +171,16 @@ void CrashJudge::BallCrash(PlayerBall &play, Barrier* circle)
 		}
 		tanline_angle = AdjustAngle(tanline_angle, play.GetAngle());
 		play.SetAngle(2 * tanline_angle - play.GetAngle());
+		if (play.GetRadius() == big_ball_radius)
+		{
+			return 2;//大球碰撞时减少的hp
+		}
+		else
+		{
+			return 1;//小球碰撞时减少的hp
+		}
 	}
+	return 0;
 }
 
 int CrashJudge::GetFloor(PlayerBall play)
@@ -204,4 +212,10 @@ void CrashJudge::PropCrashEvent(PlayerBall* ball, Prop* prop)
 	{
 		mooey += ((Coin *)prop)->GetMoney();
 	}
+}
+
+//计算两个点之间的距离
+float64 CrashJudge::GetDistance(BasicShape* a, BasicShape* b)
+{
+	return physqrt((a->GetcoordX() - b->GetcoordX()) * (a->GetcoordX() - b->GetcoordX()) + (a->GetcoordY() - b->GetcoordY()) * (a->GetcoordY() - b->GetcoordY()));
 }

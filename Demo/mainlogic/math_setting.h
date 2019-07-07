@@ -18,8 +18,12 @@ typedef double float64;
 #define phymin fmin
 #define phymax fmax
 
+const float64 SQRT_3 = 1.732;
+const float64 SQRT_1_2 = 0.707;
+
 int ProbabilityRandom(int a, int b, float64 a_pro);
 int IntRandom(int a, int b);
+float64 RealRandom(float64 a, float64 b);
 
 #endif // !MATH_SETTING_H
 
