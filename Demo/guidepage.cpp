@@ -18,7 +18,6 @@ guidepage::~guidepage()
 
 void guidepage::on_Back_clicked()
 {
-    this->setAttribute(Qt::WA_DeleteOnClose);
     this->close();
     QThread::msleep(100);
     emit sendsignal();

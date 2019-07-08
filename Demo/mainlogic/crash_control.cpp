@@ -210,7 +210,7 @@ void CrashJudge::PropCrashEvent(PlayerBall* ball, Prop* prop)
 	}
 	else
 	{
-		mooey += ((Coin *)prop)->GetMoney();
+        money += ((Coin *)prop)->GetMoney();
 	}
 }
 

@@ -9,7 +9,9 @@
 #include <QPainter>
 #include <QMovie>
 #include "failed.h"
+#include "pausemenu.h"
 #include <QThread>
+#include <QMessageBox>
 
 namespace Ui {
 class Game;
@@ -27,6 +29,8 @@ private:
     Ui::Game *ui;
 
     failed *fail;
+
+    PauseMenu *pause;
 
     QPoint m_PointStart;
 
@@ -52,11 +56,26 @@ private slots:
     void chooseagain();
 
     void generateNewBall();
+
     void on_pushButton_2_clicked();
 
     void on_pushButton_4_clicked();
 
     void on_pushButton_3_clicked();
+
+    void on_pause_clicked();
+
+    void on_pushButton_5_clicked();
+
+    void uplevel();
+
+    void geneBars();
+
+    void geneProps();
+
+    void resumeGame();
+
+    void on_Buy_clicked();
 
 signals:
     void tryagain();

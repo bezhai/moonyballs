@@ -137,7 +137,7 @@ void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 		}
 		else if (mode_num == TRIANGLE)
 		{
-			temp = new TriangleBarrier(0, 0, 9, Generate::GRadius(), 1);
+            temp = new TriangleBarrier(0, 0, 9, Generate::GRadius(), 1);
 		}
 		else if (mode_num == PENTAGON)
 		{
@@ -159,7 +159,7 @@ void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 tab
 
 	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
-		Prop* prop = new Coin(0, 0, coin_radius, 1);
+        Prop* prop = new Coin(0, 0, coin_radius, 1);
 		PropGenerate::GetcoordXY(*prop);
 		props.push_back(prop);
 	}

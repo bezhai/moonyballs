@@ -3,11 +3,11 @@
 
 #include "basic_shape.h"
 
-const float64 coin_radius = 6.0f;
-const float64 turntable_radius = 10.f;
-const float64 plus_radius = 7.0f;
+const float64 coin_radius = 24.0f;
+const float64 turntable_radius = 40.f;
+const float64 plus_radius = 28.0f;
 
-static int mooey;
+extern int money;
 
 enum PROPCLASS
 {COIN, TURNTABLE, PLUSSYMBOL};
@@ -20,6 +20,7 @@ public:
 	inline void SubHp(int32 num) { hp -= num; }
 	inline int GetMode() { return mode; }
 	inline void AddFloor() { floor++; }
+    inline int GetHp(){return  hp;}
 protected:
 	inline void SetMode(PROPCLASS p) { mode = p; }
 	inline void SetHp(int32 num) { hp = num; }

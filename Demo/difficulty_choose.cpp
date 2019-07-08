@@ -19,7 +19,6 @@ difficulty_choose::~difficulty_choose()
 
 void difficulty_choose::on_Back_clicked()
 {
-    this->setAttribute(Qt::WA_DeleteOnClose);
     this->close();
     QThread::msleep(100);
     emit sendsignal();

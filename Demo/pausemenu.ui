@@ -1,61 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>failed</class>
- <widget class="QDialog" name="failed">
+ <class>PauseMenu</class>
+ <widget class="QDialog" name="PauseMenu">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>522</width>
+    <width>521</width>
     <height>521</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>GameOver!</string>
+   <string>GamePause</string>
   </property>
-  <property name="styleSheet">
-   <string notr="true"/>
-  </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>521</width>
-     <height>521</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">border-image: url(:/pic/failbgr);</string>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Score">
-   <property name="geometry">
-    <rect>
-     <x>140</x>
-     <y>50</y>
-     <width>241</width>
-     <height>91</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>微软雅黑</family>
-     <pointsize>17</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>你的得分: </string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="Exit">
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>380</y>
+     <y>400</y>
      <width>301</width>
      <height>71</height>
     </rect>
@@ -278,7 +240,7 @@ color: rgb(4, 44, 115);</string>
    <property name="geometry">
     <rect>
      <x>110</x>
-     <y>300</y>
+     <y>310</y>
      <width>301</width>
      <height>71</height>
     </rect>
@@ -494,9 +456,28 @@ background: transparent;
 color: rgb(4, 44, 115);</string>
    </property>
    <property name="text">
-    <string>返 回 选 关</string>
+    <string>返 回 游 戏</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>521</width>
+     <height>521</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border-image: url(:/pic/failbgr);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>Exit</zorder>
+  <zorder>Back</zorder>
  </widget>
  <resources/>
  <connections/>

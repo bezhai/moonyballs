@@ -42,6 +42,8 @@ public:
 	inline void AddFloor() { floor++; }
 	inline void SetRot(float64 r) { rotation = r; }
 	inline float64 GetRot() { return rotation; }
+    inline void SetColor(int32 color){this->color=color;}
+    inline int32 GetColor(){return color;}
 protected:
 	inline void SetMode(MODE num) { mode_num = num; }
 	float64 rotation;
@@ -52,6 +54,7 @@ private:
 	float64 radius;	// The radius of circumcircle
 	MODE mode_num;
 	int32 floor;
+    int32 color;
 };
 
 

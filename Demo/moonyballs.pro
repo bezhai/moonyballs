@@ -39,6 +39,7 @@ SOURCES += \
         mainlogic/object_shift.cpp \
         mainlogic/prop.cpp \
         mainwindow.cpp \
+        pausemenu.cpp \
         ranking_list.cpp \
         saves.cpp
 
@@ -56,6 +57,7 @@ HEADERS += \
         mainlogic/object_shift.h \
         mainlogic/prop.h \
         mainwindow.h \
+        pausemenu.h \
         ranking_list.h \
         saves.h
 
@@ -66,6 +68,7 @@ FORMS += \
         guidepage.ui \
         login.ui \
         mainwindow.ui \
+        pausemenu.ui \
         ranking_list.ui \
         saves.ui
 INCLUDEPATH += "D:/Windows Kits/10/Include/10.0.17763.0/ucrt"
