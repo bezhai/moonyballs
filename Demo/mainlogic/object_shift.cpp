@@ -120,8 +120,8 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 
 void MainControl::PlayerGenerate(vector<PlayerBall*> &balls)
 {
-	static PlayerBall ball((ENDX + STARTX) / 2, STARTY, small_ball_radius, 40.0f, -PAI / 3, true);
-	balls.push_back(&ball);
+	PlayerBall* temp = new PlayerBall((ENDX + STARTX) / 2, STARTY, small_ball_radius, 40.0f, -PAI / 3, true);
+	balls.push_back(temp);
 }
 
 void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
@@ -159,21 +159,21 @@ void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 tab
 
 	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
-		static Coin temp(0, 0, coin_radius, 1);
-		PropGenerate::GetcoordXY(temp);
-		props.push_back(&temp);
+		Prop* prop = new Coin(0, 0, coin_radius, 1);
+		PropGenerate::GetcoordXY(*prop);
+		props.push_back(prop);
 	}
 	for (int i = 0; i < ProbabilityRandom(1, 0, table_p); i++)
 	{
-		static Turntable temp(0, 0, turntable_radius);
-		PropGenerate::GetcoordXY(temp);
-		props.push_back(&temp);
+		Prop* prop = new Turntable(0, 0, turntable_radius);
+		PropGenerate::GetcoordXY(*prop);
+		props.push_back(prop);
 	}
 	for (int i = 0; i < ProbabilityRandom(1, 0, plus_p); i++)
 	{
-		static PlusSymbol temp(0, 0, plus_radius);
-		PropGenerate::GetcoordXY(temp);
-		props.push_back(&temp);
+		Prop* prop = new PlusSymbol(0, 0, plus_radius);
+		PropGenerate::GetcoordXY(*prop);
+		props.push_back(prop);
 	}
 }
 
