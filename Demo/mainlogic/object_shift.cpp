@@ -134,31 +134,32 @@ void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 		{
 			static CircleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
 			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordXY(&temp, bars);
+			Generate::GcoordY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == TRIANGLE)
 		{
 			static TriangleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
 			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordXY(&temp, bars);
+			Generate::GcoordY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == PENTAGON)
 		{
 			static PentangoBarrier temp(0, 0, 9, Generate::GRadius(), 1);
 			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordXY(&temp, bars);
+			Generate::GcoordY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == SQUARE)
 		{
 			static SquareBarrier temp(0, 0, 10, Generate::GRadius(), 0);
 			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordXY(&temp, bars);
+			Generate::GcoordY(&temp, bars);
 			bars.push_back(&temp);
 		}
 	}
+	Generate::GcoordX(bars);
 }
 
 void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 table_p, float64 plus_p)

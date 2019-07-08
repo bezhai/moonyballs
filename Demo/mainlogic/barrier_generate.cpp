@@ -11,22 +11,31 @@ float64 Generate::GRadius()
 }
 
 
-void Generate::GcoordXY(Barrier* barr, vector<Barrier*> bars)
+void Generate::GcoordY(Barrier* barr, vector<Barrier*> &bars)
 {
 	float64 r = barr->GetCalculateRadius();
-	
-	while (1)
+	barr->SetY(RealRandom(ENDY + r, ENDY + per_height - r));
+}
+
+void Generate::GcoordX(vector<Barrier*> &bars)
+{
+	int size = bars.size();
+	float64 restX = ENDX - STARTX;
+	for (int i = 0; i < size; i++)
+		restX -= 2 * bars[i]->GetCalculateRadius();
+	vector<float64> listX;
+	for (int i = 0; i < size; i++)
 	{
-		barr->SetX(RealRandom(STARTX + r, ENDX - r));
-		barr->SetY(RealRandom(ENDY + r, ENDY + per_height - r));
-		if (bars.size() == 0)
-		{
-			return;
-		}
-		for (Barrier* bar : bars)
-		{
-			if (!barr->IsCovered(*bar))
-				return;
-		}
-	}//后期需要增加错误处理
+		listX.push_back(RealRandom(0.0f, restX));
+	}
+	std::sort(listX.begin(), listX.end());
+	for (int i = size - 1; i > 0; i--)
+		listX[i] -= listX[i - 1];
+	float64 tempX = STARTX;
+	for (int i = 0; i < size; i++)
+	{
+		tempX += bars[i]->GetCalculateRadius() + listX[i];
+		bars[i]->SetX(tempX);
+		tempX += bars[i]->GetCalculateRadius();
+	}
 }
