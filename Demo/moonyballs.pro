@@ -35,6 +35,7 @@ SOURCES += \
         mainlogic/barriers.cpp \
         mainlogic/basic_shape.cpp \
         mainlogic/crash_control.cpp \
+        mainlogic/math_setting.cpp \
         mainlogic/object_shift.cpp \
         mainlogic/prop.cpp \
         mainwindow.cpp \

@@ -26,13 +26,14 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">border-image: url(:/pic/failbgr);</string>
+    <string notr="true">border-image: url(:/pic/failbgr);
+background： transparent</string>
    </property>
    <property name="text">
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="Score">
    <property name="geometry">
     <rect>
      <x>150</x>
@@ -274,7 +275,7 @@ color: rgb(4, 44, 115);</string>
     <string>退 出 游 戏</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="Exit_2">
+  <widget class="QPushButton" name="Back">
    <property name="geometry">
     <rect>
      <x>110</x>

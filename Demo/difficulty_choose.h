@@ -28,10 +28,15 @@ private slots:
 
     void on_Hard_clicked();
 
+    void reshow();
 signals:
     void sendsignal();
 
     void sendDifficulty(char difficulty);
+
+    void sendCloseSignal();
+
+
 private:
     Ui::difficulty_choose *ui;
 

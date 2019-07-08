@@ -36,8 +36,10 @@ void difficulty_choose::on_Easy_clicked()
     gm=new Game;
     gm->show();
     connect(this,SIGNAL(sendDifficulty(char)),gm,SLOT(getDifficulty(char)));
+    connect(gm,SIGNAL(tryagain()),this,SLOT(reshow()));
     emit sendDifficulty(EASY);
-    this->close();
+    emit sendCloseSignal();
+    this->hide();
 }
 
 void difficulty_choose::on_Medium_clicked()
@@ -45,8 +47,10 @@ void difficulty_choose::on_Medium_clicked()
     gm=new Game;
     gm->show();
     connect(this,SIGNAL(sendDifficulty(char)),gm,SLOT(getDifficulty(char)));
+    connect(gm,SIGNAL(tryagain()),this,SLOT(reshow()));
     emit sendDifficulty(NORMAL);
-    this->close();
+    emit sendCloseSignal();
+    this->hide();
 }
 
 void difficulty_choose::on_Hard_clicked()
@@ -54,6 +58,13 @@ void difficulty_choose::on_Hard_clicked()
     gm=new Game;
     gm->show();
     connect(this,SIGNAL(sendDifficulty(char)),gm,SLOT(getDifficulty(char)));
+    connect(gm,SIGNAL(tryagain()),this,SLOT(reshow()));
     emit sendDifficulty(HARD);
-    this->close();
+    emit sendCloseSignal();
+    this->hide();
+}
+
+void difficulty_choose::reshow()
+{
+    this->show();
 }

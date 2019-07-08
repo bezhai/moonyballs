@@ -9,9 +9,23 @@ failed::failed(QWidget *parent) :
     setWindowFlags(Qt::MSWindowsFixedSizeDialogHint|Qt::FramelessWindowHint);
     setFixedSize(this->width(),this->height());     // 固定窗口大小
     setAttribute(Qt::WA_StyledBackground);
+    setAttribute(Qt::WA_TranslucentBackground);
+    setAttribute(Qt::WA_QuitOnClose,true);
 }
 
 failed::~failed()
 {
     delete ui;
+}
+
+void failed::on_Exit_clicked()
+{
+    emit closegame();
+    this->close();
+}
+
+void failed::on_Back_clicked()
+{
+    emit again();
+    this->close();
 }

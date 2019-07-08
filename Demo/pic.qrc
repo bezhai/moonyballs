@@ -20,6 +20,12 @@
         <file alias="gmbgr">pic/GameBackground.png</file>
         <file alias="gmbgrv">pic/GameBackgroundVertical.png</file>
         <file alias="failbgr">pic/FailedBackground.png</file>
+        <file alias="gmbgrcmr">pic/GameBackgroundVerticalCompressed.png</file>
         <file alias="shtr">pic/Shooter.png</file>
+        <file alias="cirbr">pic/CircleBarrier.png</file>
+        <file alias="hexbr">pic/HexagonalBarrier.png</file>
+        <file alias="penbr">pic/PentagonBarrier.png</file>
+        <file alias="rectbr">pic/RectangleBarrier.png</file>
+        <file alias="tribr">pic/TriangleBarrier.png</file>
     </qresource>
 </RCC>

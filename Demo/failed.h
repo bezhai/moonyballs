@@ -1,4 +1,4 @@
-#ifndef FAILED_H
+﻿#ifndef FAILED_H
 #define FAILED_H
 
 #include <QDialog>
@@ -15,6 +15,15 @@ public:
     explicit failed(QWidget *parent = nullptr);
     ~failed();
 
+private slots:
+    void on_Exit_clicked();
+
+    void on_Back_clicked();
+
+signals:
+    void closegame();
+
+    void again();
 private:
     Ui::failed *ui;
 };

@@ -63,6 +63,7 @@ void MainWindow::on_StartGame_clicked()
     diff->show();
     this->hide();
     connect(diff,SIGNAL(sendsignal()),this,SLOT(reshow()));
+    connect(diff,SIGNAL(sendCloseSignal()),this,SLOT(closeself()));
 }
 
 bool MainWindow::getSaves()

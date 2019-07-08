@@ -4,8 +4,8 @@
 #include "barriers.h"
 #include "basic_shape.h"
 
-#define SMALLFACTION 0.25
-#define BIGFACTION 0.3334
+#define SMALLFACTION 0.3334
+#define BIGFACTION 0.5
 
 //有关生成障碍物的命名空间
 namespace Generate
