@@ -130,40 +130,33 @@ void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 	for (int i = 0; i < bar_num; i++)
 	{
 		MODE mode_num = (MODE)(IntRandom(0, 3));
+		Barrier* temp;
 		if (mode_num == CIRCLE)
 		{
-			static CircleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
-			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordY(&temp, bars);
-			bars.push_back(&temp);
+			temp = new CircleBarrier(0, 0, 9, Generate::GRadius(), 1);
 		}
 		else if (mode_num == TRIANGLE)
 		{
-			static TriangleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
-			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordY(&temp, bars);
-			bars.push_back(&temp);
+			temp = new TriangleBarrier(0, 0, 9, Generate::GRadius(), 1);
 		}
 		else if (mode_num == PENTAGON)
 		{
-			static PentangoBarrier temp(0, 0, 9, Generate::GRadius(), 1);
-			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordY(&temp, bars);
-			bars.push_back(&temp);
+			temp = new PentangoBarrier(0, 0, 9, Generate::GRadius(), 1);
 		}
-		else if (mode_num == SQUARE)
+		else
 		{
-			static SquareBarrier temp(0, 0, 10, Generate::GRadius(), 0);
-			temp.SetRot(RealRandom(-PAI, PAI));
-			Generate::GcoordY(&temp, bars);
-			bars.push_back(&temp);
+			temp = new SquareBarrier(0, 0, 9, Generate::GRadius(), 1);
 		}
+		temp->SetRot(RealRandom(-PAI, PAI));
+		Generate::GcoordY(temp, bars);
+		bars.push_back(temp);
 	}
 	Generate::GcoordX(bars);
 }
 
 void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 table_p, float64 plus_p)
 {
+
 	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
 		static Coin temp(0, 0, coin_radius, 1);
@@ -199,3 +192,4 @@ bool MainControl::EndJudge(vector<PlayerBall*> balls)
 			return false;
 	return true;
 }
+

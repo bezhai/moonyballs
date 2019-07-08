@@ -41,6 +41,7 @@ public:
 	inline int GetFloor() { return floor; }
 	inline void AddFloor() { floor++; }
 	inline void SetRot(float64 r) { rotation = r; }
+	inline float64 GetRot() { return rotation; }
 protected:
 	inline void SetMode(MODE num) { mode_num = num; }
 	float64 rotation;
