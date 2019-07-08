@@ -14,14 +14,11 @@ float64 Generate::GRadius()
 void Generate::GcoordXY(Barrier* barr, vector<Barrier*> bars)
 {
 	float64 r = barr->GetCalculateRadius();
-	std::default_random_engine e(time(0));
-	std::uniform_real_distribution<float64> croodX(STARTX + r, ENDX - r);
-	std::uniform_real_distribution<float64> croodY(ENDY + r, ENDY + per_height - r);
-
+	
 	while (1)
 	{
-		barr->SetX(croodX(e));
-		barr->SetY(croodY(e));
+		barr->SetX(RealRandom(STARTX + r, ENDX - r));
+		barr->SetY(RealRandom(ENDY + r, ENDY + per_height - r));
 		if (bars.size() == 0)
 		{
 			return;

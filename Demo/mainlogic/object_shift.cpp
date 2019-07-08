@@ -120,7 +120,8 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 
 void MainControl::PlayerGenerate(vector<PlayerBall*> &balls)
 {
-	balls.push_back(new PlayerBall(ENDX / 2, STARTY, small_ball_radius, 40.0f, -PAI / 3, true));
+	static PlayerBall ball((ENDX + STARTX) / 2, STARTY, small_ball_radius, 40.0f, -PAI / 3, true);
+	balls.push_back(&ball);
 }
 
 void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
@@ -131,28 +132,28 @@ void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 		MODE mode_num = (MODE)(IntRandom(0, 3));
 		if (mode_num == CIRCLE)
 		{
-			CircleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
+			static CircleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
 			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == TRIANGLE)
 		{
-			TriangleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
+			static TriangleBarrier temp(0, 0, 9, Generate::GRadius(), 1);
 			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == PENTAGON)
 		{
-			PentangoBarrier temp(0, 0, 9, Generate::GRadius(), 1);
+			static PentangoBarrier temp(0, 0, 9, Generate::GRadius(), 1);
 			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
 		}
 		else if (mode_num == SQUARE)
 		{
-			SquareBarrier temp(0, 0, 10, Generate::GRadius(), 0);
+			static SquareBarrier temp(0, 0, 10, Generate::GRadius(), 0);
 			temp.SetRot(RealRandom(-PAI, PAI));
 			Generate::GcoordXY(&temp, bars);
 			bars.push_back(&temp);
@@ -164,19 +165,19 @@ void MainControl::PropGenerate(vector<Prop*> &props, float64 coin_p, float64 tab
 {
 	for (int i = 0; i < ProbabilityRandom(1, 0, coin_p); i++)
 	{
-		Coin temp(0, 0, coin_radius, 1);
+		static Coin temp(0, 0, coin_radius, 1);
 		PropGenerate::GetcoordXY(temp);
 		props.push_back(&temp);
 	}
 	for (int i = 0; i < ProbabilityRandom(1, 0, table_p); i++)
 	{
-		Turntable temp(0, 0, turntable_radius);
+		static Turntable temp(0, 0, turntable_radius);
 		PropGenerate::GetcoordXY(temp);
 		props.push_back(&temp);
 	}
 	for (int i = 0; i < ProbabilityRandom(1, 0, plus_p); i++)
 	{
-		PlusSymbol temp(0, 0, plus_radius);
+		static PlusSymbol temp(0, 0, plus_radius);
 		PropGenerate::GetcoordXY(temp);
 		props.push_back(&temp);
 	}
@@ -188,4 +189,12 @@ void MainControl::SetBeginAngle(vector<PlayerBall*> &balls, double angle)
 	{
 		ball->SetAngle(angle);
 	}
+}
+
+bool MainControl::EndJudge(vector<PlayerBall*> balls)
+{
+	for (PlayerBall* ball : balls)
+		if (ball->GetActive() == true)
+			return false;
+	return true;
 }

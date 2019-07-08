@@ -128,7 +128,7 @@ void CrashJudge::BallEndMove(PlayerBall* play)
 {
 	play->SetInactive();
 	play->SetAngle(-PAI / 2);
-	play->SetcoordX(ENDX / 2);
+	play->SetcoordX((ENDX + STARTX) / 2);
 	play->SetcoordY(STARTY);
 	play->SetSpeed(BASICSPEED);
 }

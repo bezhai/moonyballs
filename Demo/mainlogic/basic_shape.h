@@ -10,7 +10,7 @@
 
 //вСио╫гё╛сроб╫г
 #define STARTX  40
-#define STARTY 560
+#define STARTY 565
 #define ENDX   560
 #define ENDY     0
 
