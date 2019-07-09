@@ -22,7 +22,6 @@ ranking_list::ranking_list(QWidget *parent) :
     rnklst->setFrameShape(QFrame::NoFrame);
     rnklst->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
-    // TODO
     // getRanking();
 
     int column=rnklst->columnCount();
