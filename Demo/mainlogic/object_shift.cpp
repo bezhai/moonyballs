@@ -120,7 +120,7 @@ int MainControl::GetColor(Barrier* bar, COLOR color)
 
 void MainControl::PlayerGenerate(vector<PlayerBall*> &balls)
 {
-	PlayerBall* temp = new PlayerBall((ENDX + STARTX) / 2, STARTY, small_ball_radius, 40.0f, -PAI / 3, true);
+    PlayerBall* temp = new PlayerBall((ENDX + STARTX) / 2, STARTY, small_ball_radius, 40.0, -PAI / 3, true);
 	balls.push_back(temp);
 }
 
@@ -129,7 +129,7 @@ void MainControl::BarrierGenerate(vector<Barrier*> &bars, int bar_num)
 	//生成障碍物对象
 	for (int i = 0; i < bar_num; i++)
 	{
-		MODE mode_num = (MODE)(IntRandom(0, 3));
+        MODE mode_num = (MODE)((IntRandom(0, 3) + i) % 4);
 		Barrier* temp;
 		if (mode_num == CIRCLE)
 		{

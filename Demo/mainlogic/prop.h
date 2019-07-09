@@ -3,9 +3,9 @@
 
 #include "basic_shape.h"
 
-const float64 coin_radius = 24.0f;
-const float64 turntable_radius = 40.f;
-const float64 plus_radius = 28.0f;
+const float64 coin_radius = 24.0;
+const float64 turntable_radius = 40.0;
+const float64 plus_radius = 28.0;
 
 extern int money;
 
@@ -16,7 +16,7 @@ class Prop : public Circle
 {
 public:
 	Prop(float64 x, float64 y, float64 r) : Circle(x, y, r) { floor = 0; }
-	~Prop() { }
+    virtual ~Prop() { }
 	inline void SubHp(int32 num) { hp -= num; }
 	inline int GetMode() { return mode; }
 	inline void AddFloor() { floor++; }
@@ -41,7 +41,7 @@ public:
 		SetMode(COIN);
 	}
 	int GetMoney() { return coin_value; }
-	virtual ~Coin() {}
+    virtual ~Coin() {}
 private:
 	int coin_value;
 };
@@ -54,7 +54,7 @@ public:
 		SetHp(3);
 		SetMode(TURNTABLE);
 	}
-	~Turntable() {}
+    virtual ~Turntable() {}
 };
 
 class PlusSymbol : public Prop
@@ -65,7 +65,7 @@ public:
 		SetHp(3);
 		SetMode(PLUSSYMBOL);
 	}
-	~PlusSymbol() {}
+    virtual ~PlusSymbol() {}
 };
 
 namespace PropGenerate

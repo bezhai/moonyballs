@@ -6,10 +6,6 @@
 void PropGenerate::GetcoordXY(Prop &prop)
 {
 	float64 r = prop.GetRadius();
-	std::default_random_engine e(time(0));
-	std::uniform_real_distribution<float64> croodX(STARTX + r, ENDX - r);
-	std::uniform_real_distribution<float64> croodY(ENDY + r, ENDY + per_height - r);
-
-	prop.SetcoordX(croodX(e));
-	prop.SetcoordY(croodY(e));
+    prop.SetcoordX(RealRandom(STARTX + r, ENDX - r));
+    prop.SetcoordY(RealRandom(ENDY + r, ENDY + per_height - r));
 }

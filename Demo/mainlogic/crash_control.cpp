@@ -2,9 +2,11 @@
 
 float64 Segment::CalcDistance(BasicShape point)
 {
+    BasicShape a(x1, y1);
+    BasicShape b(x2, y2);
 	//计算点到线段端点的距离
-	float64 d1 = CrashJudge::GetDistance(&point, &BasicShape(x1, y1));
-	float64 d2 = CrashJudge::GetDistance(&point, &BasicShape(x2, y2));
+    float64 d1 = CrashJudge::GetDistance(&point, &a);
+    float64 d2 = CrashJudge::GetDistance(&point, &b);
 
 	//如果x2-x1=0，那么执行下列选择
 	if (phyabs(x2 - x1) <= INFINITE_S)
@@ -90,7 +92,7 @@ int32 CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 			float64 ball_angle = play.GetAngle();
 			float64 barri_angle = AdjustAngle(seg.CalcAngle(), ball_angle);
 			play.SetAngle(2 * barri_angle - ball_angle);
-			if (play.GetRadius() == big_ball_radius)
+            if (phyabs(play.GetRadius() - big_ball_radius) <= INFINITE_S)
 			{
 				return 2;//大球碰撞时减少的hp
 			}
@@ -158,7 +160,7 @@ int CrashJudge::BallCrash(PlayerBall &play, Barrier* circle)
 		//如果球心连线平行于y轴
 		if (phyabs(play.GetcoordX() - _circle.GetcoordX()) <= INFINITE_S)
 		{
-			tanline_angle = 0.0f;
+            tanline_angle = 0.0;
 		}
 		//如果球心连线平行于x轴
 		else if (phyabs(play.GetcoordY() - _circle.GetcoordY()) <= INFINITE_S)

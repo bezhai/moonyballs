@@ -36,7 +36,7 @@ public:
 	inline void SetHp(int32 set_hp) { this->hp = set_hp; }
 
 	bool IsCovered(Barrier &br);
-	virtual void GetPos(vector<float64> &points) {}
+    virtual void GetPos(vector<float64> &) {}
 	inline int GetMode() { return mode_num; }
 	inline int GetFloor() { return floor; }
 	inline void AddFloor() { floor++; }

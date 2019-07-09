@@ -14,16 +14,16 @@
 #define ENDX   560
 #define ENDY     0
 
-#define BASICSPEED 40.0f
-#define TIME 0.1f
-#define ACCELERATION -5.0f
-#define INFINITE_S 0.0025f
+#define BASICSPEED 190.0
+#define TIME 0.03
+#define ACCELERATION -70.0
+#define INFINITE_S 0.0025
 #define PAI 3.1415926
 
 //一共有十层，每一层的高度为1/10
 const float64 per_height = (STARTY - ENDY) / 10;
-const float64 big_ball_radius = 10.0f;
-const float64 small_ball_radius = 6.0f;
+const float64 big_ball_radius = 10.0;
+const float64 small_ball_radius = 6.0;
 
 //基本形状，包括位置定义
 class BasicShape
@@ -37,7 +37,7 @@ public:
 		coordX = x;
 		coordY = y;
 	}
-	~BasicShape() {}
+    virtual ~BasicShape() {}
     virtual void operator = (BasicShape b)
 	{
 		coordX = b.coordX;

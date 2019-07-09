@@ -37,7 +37,6 @@ Game::Game(QWidget *parent) :
     upleveltimer->start();
     generateNewBall();
     geneBars();
-    geneBars();
     connect(bargene,SIGNAL(timeout()),this,SLOT(geneBars()));
     connect(propgene,SIGNAL(timeout()),this,SLOT(geneProps()));
     connect(upleveltimer,SIGNAL(timeout()),this,SLOT(uplevel()));
@@ -295,9 +294,9 @@ void Game::paintEvent(QPaintEvent *)
 
     }
 
-    QString pos;
-    pos=tr("X: %1, Y: %2 Rot: %3").arg(m_PointEnd.x()).arg(m_PointEnd.y()).arg(rot);
-    ui->label->setText(pos);
+    //QString pos;
+    //pos=tr("X: %1, Y: %2 Rot: %3").arg(m_PointEnd.x()).arg(m_PointEnd.y()).arg(rot);
+    //ui->label->setText(pos);
 }
 
 void Game::mouseReleaseEvent(QMouseEvent *)
@@ -320,7 +319,6 @@ void Game::mouseReleaseEvent(QMouseEvent *)
             playerballs.at(i)->SetActive();
             MainControl::BallCalc(playerballs,barriers,props);
             update();
-            QThread::msleep(50);
         }
     }
     update();
@@ -419,7 +417,7 @@ void Game::on_pushButton_5_clicked()
     MainControl::ItemsMovement(barriers,props);
     for(int i=0;i<barriers.size();i++)
     {
-        if(barriers.at(i)->GetFloor()>=10)
+        if(barriers.at(i)->GetFloor()>=9)
             on_TestFailure_clicked();
     }
 }
@@ -430,7 +428,7 @@ void Game::uplevel()
     update();
     for(int i=0;i<barriers.size();i++)
     {
-        if(barriers.at(i)->GetFloor()>=10)
+        if(barriers.at(i)->GetFloor()>=9)
             on_TestFailure_clicked();
     }
 }
@@ -438,8 +436,9 @@ void Game::uplevel()
 void Game::geneBars()
 {
     int nownum=barriers.size();
-    MainControl::BarrierGenerate(barriers,1);
-    barriers.at(nownum)->SetColor(rand()%4);
+    MainControl::BarrierGenerate(barriers,2);
+    for(int i = 0; i < 2; i++)
+        barriers.at(nownum + i)->SetColor(rand()%4);
     update();
 }
 

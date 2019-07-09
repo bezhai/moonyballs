@@ -24,8 +24,6 @@ namespace MainControl
 	void BarrierGenerate(vector<Barrier*>&, int bar_num);//参数为之前生成的障碍物对象的向量，后者为生成障碍物的数量
 	void PropGenerate(vector<Prop*>&, float64 coin_p, float64 table_p, float64 plus_p);//p代表概率
 	bool EndJudge(vector<PlayerBall*>);//判断小球是否全部结束运动，是则返回true
-	//一个函数判断是否失败和道具销毁
-	//
 }
 
 #endif // !OBJECT_LOGIC_H

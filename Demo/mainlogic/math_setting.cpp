@@ -4,27 +4,24 @@
 
 int ProbabilityRandom(int a, int b, float64 a_pro)
 {
-	std::default_random_engine e;
-	std::bernoulli_distribution u(a_pro);
-	e.seed(unsigned(time(0)));
-	if (u(e) == true)
-		return a;
-	else
-		return b;
+    srand((unsigned)time(nullptr));
+    double c = rand () /double (RAND_MAX);
+    if(c >= a_pro)
+        return b;
+    else {
+        return a;
+    }
 }
 
 int IntRandom(int a, int b)
 {
-	std::default_random_engine e;
-	std::uniform_int_distribution<int> u(a, b);
-	e.seed(unsigned(time(0)));
-	return u(e);
+    srand((unsigned)time(nullptr));
+    return  (rand () % (b-a+1))+ a;
 }
 
 float64 RealRandom(float64 a, float64 b)
 {
-	std::default_random_engine e;
-	std::uniform_real_distribution<float64> u(a, b);
-	e.seed(unsigned(time(0)));
-	return u(e);
+    srand((unsigned)time(nullptr));
+    double c = rand () /double (RAND_MAX);
+    return c * (b - a) + a;
 }
