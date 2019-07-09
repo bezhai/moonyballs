@@ -75,7 +75,7 @@ bool MainWindow::getSaves()
 void MainWindow::on_About_clicked()
 {
     QString title=QString::fromLocal8Bit("关于");
-    QString intro=QString::fromLocal8Bit("疯狂弹球\n\n基于Qt 5.12.3 (MSCV 2017, 32 bit)\n\n在 X年X月X日 XX:XX:XX编译通过\n\nSky Group 版权所有 保留所有权利.\n\n.");
+    QString intro=QString::fromLocal8Bit("疯狂弹球\n\n基于Qt 5.12.3 (MSCV 2017, 32 bit)\n\n在 2019年7月9日 09:31:30编译通过\n\nSky Group 版权所有 保留所有权利.\n\n.");
     QMessageBox about(QMessageBox::NoIcon,title,intro);
     about.setIconPixmap(QPixmap(":/pic/ball"));
     about.exec();

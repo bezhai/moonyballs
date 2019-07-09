@@ -475,9 +475,29 @@ color: rgb(4, 44, 115);</string>
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>100</y>
+     <width>171</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>25</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>游戏暂停</string>
+   </property>
+  </widget>
   <zorder>label</zorder>
   <zorder>Exit</zorder>
   <zorder>Back</zorder>
+  <zorder>label_2</zorder>
  </widget>
  <resources/>
  <connections/>

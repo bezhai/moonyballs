@@ -94,10 +94,12 @@ int32 CrashJudge::SetAngle(vector<Segment> seg_list, PlayerBall &play)
 			play.SetAngle(2 * barri_angle - ball_angle);
             if (phyabs(play.GetRadius() - big_ball_radius) <= INFINITE_S)
 			{
+                PlayerBall::AddScore(10);
 				return 2;//大球碰撞时减少的hp
 			}
 			else
 			{
+                PlayerBall::AddScore(5);
 				return 1;//小球碰撞时减少的hp
 			}
 		}
@@ -123,7 +125,7 @@ bool CrashJudge::BoundaryCrash(PlayerBall* play)
 		play->SetAngle(-play->GetAngle());
 	}
 	//当小球触碰到下边界时，返回true
-	return (play->GetcoordY() <= (ENDY + r));
+    return (play->GetcoordY() <= (ENDY));
 }
 
 void CrashJudge::BallEndMove(PlayerBall* play)
@@ -175,10 +177,12 @@ int CrashJudge::BallCrash(PlayerBall &play, Barrier* circle)
 		play.SetAngle(2 * tanline_angle - play.GetAngle());
 		if (play.GetRadius() == big_ball_radius)
 		{
+            PlayerBall::AddScore(10);
 			return 2;//大球碰撞时减少的hp
 		}
 		else
 		{
+            PlayerBall::AddScore(5);
 			return 1;//小球碰撞时减少的hp
 		}
 	}

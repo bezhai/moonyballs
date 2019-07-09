@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Game</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pic.qrc">
+    <normaloff>:/pic/ball</normaloff>:/pic/ball</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="TestFailure">
     <property name="geometry">
@@ -56,8 +60,8 @@
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>690</x>
-      <y>100</y>
+      <x>670</x>
+      <y>380</y>
       <width>201</width>
       <height>61</height>
      </rect>
@@ -69,8 +73,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>300</y>
+      <x>670</x>
+      <y>480</y>
       <width>591</width>
       <height>71</height>
      </rect>
@@ -82,8 +86,8 @@
    <widget class="QLabel" name="label_2">
     <property name="geometry">
      <rect>
-      <x>680</x>
-      <y>210</y>
+      <x>690</x>
+      <y>570</y>
       <width>411</width>
       <height>51</height>
      </rect>
@@ -496,16 +500,74 @@ background: transparent;</string>
    <widget class="QPushButton" name="Buy">
     <property name="geometry">
      <rect>
-      <x>700</x>
-      <y>470</y>
-      <width>93</width>
-      <height>28</height>
+      <x>860</x>
+      <y>370</y>
+      <width>151</width>
+      <height>41</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <pointsize>13</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/pic/btn);</string>
+    </property>
     <property name="text">
-     <string>Buyball</string>
+     <string>购买小球</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>0</y>
+      <width>680</width>
+      <height>420</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/pic/shop);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>600</x>
+      <y>420</y>
+      <width>680</width>
+      <height>360</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(:/pic/items);</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <zorder>label_5</zorder>
+   <zorder>label_4</zorder>
+   <zorder>TestFailure</zorder>
+   <zorder>pushButton</zorder>
+   <zorder>label</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_2</zorder>
+   <zorder>pushButton_2</zorder>
+   <zorder>pushButton_3</zorder>
+   <zorder>pushButton_4</zorder>
+   <zorder>Coin</zorder>
+   <zorder>Score</zorder>
+   <zorder>BigNum</zorder>
+   <zorder>SmallNum</zorder>
+   <zorder>pause</zorder>
+   <zorder>pushButton_5</zorder>
+   <zorder>Buy</zorder>
+   <zorder>horizontalSpacer</zorder>
   </widget>
  </widget>
  <resources>

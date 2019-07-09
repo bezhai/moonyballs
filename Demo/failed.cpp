@@ -29,3 +29,8 @@ void failed::on_Back_clicked()
     emit again();
     this->close();
 }
+
+void failed::displayScore(int score)
+{
+    ui->Score->setText(tr("Your Score: %1").arg(score));
+}

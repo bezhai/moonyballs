@@ -7,11 +7,12 @@
 #include <QMouseEvent>
 #include <QtMath>
 #include <QPainter>
-#include <QMovie>
+#include <QMediaPlayer>
 #include "failed.h"
 #include "pausemenu.h"
 #include <QThread>
 #include <QMessageBox>
+#include <QDir>
 
 namespace Ui {
 class Game;
@@ -77,8 +78,15 @@ private slots:
 
     void on_Buy_clicked();
 
+    void testModeOff();
+
+    void saveData();
+
+    void playBGM();
 signals:
     void tryagain();
+
+    void sendScore(int score);
 };
 
 #endif // GAME_H

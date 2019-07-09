@@ -1,18 +1,28 @@
 ﻿#include "game.h"
 #include "ui_game.h"
 #include "mainlogic/object_shift.h"
+
 int money=0;
+int score=0;
+
 static vector<PlayerBall*> playerballs;
 static vector<Barrier *> barriers;
 static vector<Prop *> props;
+
 static QTimer *timer=new QTimer;
 static QTimer *propgene=new QTimer;
 static QTimer *bargene=new QTimer;
-static QTimer *upleveltimer=new QTimer;
+static QTimer *upleveltimer=new QTimer;     // 分别对应游戏、生成障碍、生成道具、上升的计时器
+
+static QMediaPlayer *bgmplayer=new QMediaPlayer;
+
 static qreal coin_P = 0.46;
 static qreal bigger_P=0.25;
-static qreal smaller_P=0.25;
-static int small_ball_num=0;
+static qreal smaller_P=0.25;                // 生成金币、大器、小器的概率
+
+static int small_ball_num=0;                // 当前小球数量
+static int big_ball_num=0;                  // 当前大球数量
+static int per_gene_num=0;                  // 每一次生成障碍数量
 
 enum DIFFICULTYS {EASY,NORMAL,HARD};
 const qreal PI=atan(1.0)*4;
@@ -28,6 +38,8 @@ Game::Game(QWidget *parent) :
     setAttribute(Qt::WA_StyledBackground);
     setAttribute(Qt::WA_DeleteOnClose,true);
     setDifficulty(difficulty);
+    bgmplayer->setMedia(QUrl::fromLocalFile(QDir::currentPath()+"/music/bgm.mp3"));
+    playBGM();
     m_PointStart=QPoint(305,115);
     m_PointEnd=m_PointStart;
     timer->setInterval(30);
@@ -35,6 +47,7 @@ Game::Game(QWidget *parent) :
     bargene->start();
     propgene->start();
     upleveltimer->start();
+    testModeOff();
     generateNewBall();
     geneBars();
     connect(bargene,SIGNAL(timeout()),this,SLOT(geneBars()));
@@ -69,16 +82,19 @@ void Game::setDifficulty(char diff)
         bargene->setInterval(10000);
         propgene->setInterval(10000);
         upleveltimer->setInterval(15000);
+        per_gene_num=2;
         break;
     case NORMAL:
         bargene->setInterval(5000);
         propgene->setInterval(50000);
         upleveltimer->setInterval(10000);
+        per_gene_num=3;
         break;
     case HARD:
         bargene->setInterval(3000);
         propgene->setInterval(100000);
         upleveltimer->setInterval(5000);
+        per_gene_num=4;
         break;
     default:
         break;
@@ -190,6 +206,7 @@ void Game::paintEvent(QPaintEvent *)
         QString strhp=tr("%1").arg(hp);
         switch (barriers.at(j)->GetMode()) {
         case CIRCLE:
+            // 根据不同颜色载入不同色图片
             switch (color) {
                 case 0:
                 cirbr.load(":/pic/cirbl");break;
@@ -200,7 +217,7 @@ void Game::paintEvent(QPaintEvent *)
             }
             cirbr=cirbr.scaled(size,size);
             painter.drawImage(x,y,cirbr);
-            painter.drawText(barriers.at(j)->GetX(),700-barriers.at(j)->GetY(),strhp);
+            painter.drawText(barriers.at(j)->GetX() - 5,703-barriers.at(j)->GetY(),strhp);
             break;
         case SQUARE:
             switch (color) {
@@ -213,10 +230,10 @@ void Game::paintEvent(QPaintEvent *)
             case 3:
                 rectbr.load(":/pic/rectgr");break;
             }
-            painter.rotate(-barriers.at(j)->GetRot());
+            //painter.rotate(-barriers.at(j)->GetRot());
             rectbr=rectbr.scaled(QSize(size,size));
             painter.drawImage(x,y,rectbr);
-            painter.drawText(barriers.at(j)->GetX(),700-barriers.at(j)->GetY(),strhp);
+            painter.drawText(barriers.at(j)->GetX() - 5,703-barriers.at(j)->GetY(),strhp);
             break;
         case TRIANGLE:
             switch (color) {
@@ -229,10 +246,10 @@ void Game::paintEvent(QPaintEvent *)
             case 3:
                 tribr.load(":/pic/tricy");break;
             }
-            painter.rotate(-barriers.at(j)->GetRot());
+            //painter.rotate(-barriers.at(j)->GetRot());
             tribr=tribr.scaled(QSize(size,size));
             painter.drawImage(x,y,tribr);
-            painter.drawText(barriers.at(j)->GetX(),700-barriers.at(j)->GetY(),strhp);
+            painter.drawText(barriers.at(j)->GetX() - 5,703-barriers.at(j)->GetY(),strhp);
             break;
         case HEXAGON:
             switch (color) {
@@ -245,10 +262,10 @@ void Game::paintEvent(QPaintEvent *)
             case 3:
                 hexbr.load(":/pic/hexpl");break;
             }
-            painter.rotate(-barriers.at(j)->GetRot());
+            //painter.rotate(-barriers.at(j)->GetRot());
             hexbr=hexbr.scaled(QSize(size,size));
             painter.drawImage(x,y,hexbr);
-            painter.drawText(barriers.at(j)->GetX(),700-barriers.at(j)->GetY(),strhp);
+            painter.drawText(barriers.at(j)->GetX() - 5,703-barriers.at(j)->GetY(),strhp);
             break;
         case PENTAGON:
             switch (color) {
@@ -261,10 +278,10 @@ void Game::paintEvent(QPaintEvent *)
             case 3:
                 penbr.load(":/pic/penpl");break;
             }
-            painter.rotate(-barriers.at(j)->GetRot());
+            //painter.rotate(-barriers.at(j)->GetRot());
             penbr=penbr.scaled(QSize(size,size));
             painter.drawImage(x,y,penbr);
-            painter.drawText(barriers.at(j)->GetX(),700-barriers.at(j)->GetY(),strhp);
+            painter.drawText(barriers.at(j)->GetX() - 5,703-barriers.at(j)->GetY(),strhp);
             break;
         }
         int floor=barriers.at(j)->GetFloor();
@@ -341,8 +358,19 @@ void Game::gamePlay()
             props.erase(props.begin()+j);
         }
     }
+    small_ball_num=0;
+    big_ball_num=0;
+    for(int k =0;k<playerballs.size();k++)
+    {
+        if(playerballs.at(k)->GetRadius()==small_ball_radius)
+            small_ball_num++;
+        else if(playerballs.at(k)->GetRadius()==big_ball_radius)
+            big_ball_num++;
+    }
     ui->Coin->setText(tr("%1").arg(money));
+    ui->Score->setText(tr("%1").arg(score));
     ui->SmallNum->setText(tr("%1").arg(small_ball_num));
+    ui->BigNum->setText(tr("%1").arg(big_ball_num));
     update();
 }
 
@@ -358,6 +386,10 @@ void Game::on_TestFailure_clicked()
     small_ball_num=0;
     connect(fail,SIGNAL(closegame()),this,SLOT(closeself()));
     connect(fail,SIGNAL(again()),this,SLOT(chooseagain()));
+    connect(this,SIGNAL(sendScore(int)),fail,SLOT(displayScore(int)));
+    saveData();
+    emit sendScore(score);
+    score=0;
 }
 
 void Game::closeself()
@@ -436,7 +468,7 @@ void Game::uplevel()
 void Game::geneBars()
 {
     int nownum=barriers.size();
-    MainControl::BarrierGenerate(barriers,2);
+    MainControl::BarrierGenerate(barriers,per_gene_num);
     for(int i = 0; i < 2; i++)
         barriers.at(nownum + i)->SetColor(rand()%4);
     update();
@@ -468,4 +500,28 @@ void Game::on_Buy_clicked()
     {
        QMessageBox::information(this,"Insufficient funds",QString::fromLocal8Bit("金钱不足！"));
     }
+}
+
+void Game::testModeOff()
+{
+    ui->pushButton_2->setVisible(false);
+    ui->label_2->setVisible(false);
+    ui->label_3->setVisible(false);
+    ui->pushButton_3->setVisible(false);
+    ui->pushButton_4->setVisible(false);
+    ui->pushButton_5->setVisible(false);
+    ui->TestFailure->setVisible(false);
+    ui->label->setVisible(false);
+}
+
+void Game::saveData()
+{
+    QFile save;
+
+}
+
+void Game::playBGM()
+{
+    bgmplayer->setVolume(60);
+    bgmplayer->play();
 }

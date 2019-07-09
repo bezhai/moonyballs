@@ -3,13 +3,13 @@
 
 void PlayerBall::Movement()
 {
-	float64 x_speed = speed * cos(angle);
-	float64 y_speed = speed * sin(angle);
+    float64 x_speed = speed * cos(angle);
+    float64 y_speed = speed * sin(angle);
 
-	AddcoordX(x_speed * TIME);
-	AddcoordY(y_speed * TIME + 0.5 *  ACCELERATION * TIME * TIME);//¸üÐÂÐ¡Çò×ø±ê
-	y_speed += ACCELERATION * TIME;//¸üÐÂÐ¡ÇòyÖá·½ÏòËÙ¶È
+    AddcoordX(x_speed * TIME);
+    AddcoordY(y_speed * TIME + 0.5 *  ACCELERATION * TIME * TIME);//???????????
+    y_speed += ACCELERATION * TIME;//???????y???????
 
-	SetSpeed(physqrt(pow(x_speed, 2) + pow(y_speed, 2)));//¸üÐÂËÙ¶È
-	SetAngle(phyatan(y_speed, x_speed));//¸üÐÂ½Ç¶È
+    SetSpeed(physqrt(pow(x_speed, 2) + pow(y_speed, 2)));//???????
+    SetAngle(phyatan(y_speed, x_speed));//???½??
 }

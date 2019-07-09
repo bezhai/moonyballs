@@ -20,6 +20,8 @@
 #define INFINITE_S 0.0025
 #define PAI 3.1415926
 
+extern int score;
+
 //一共有十层，每一层的高度为1/10
 const float64 per_height = (STARTY - ENDY) / 10;
 const float64 big_ball_radius = 10.0;
@@ -81,6 +83,15 @@ public:
 		this->activity = activity;
 	}
 	~PlayerBall() { }
+    virtual void operator = (PlayerBall b)
+    {
+        this->SetAngle(-b.GetAngle());
+        this->SetSpeed(b.GetSpeed());
+        this->SetActive();
+        this->SetSpeed(b.GetSpeed());
+        this->SetcoordX(b.GetcoordX());
+        this->SetcoordY(b.GetcoordY());
+    }
 	inline void SetSpeed(float64 v){ speed = v; }
 	inline void SetAngle(float64 _angle){ angle = _angle; }
 	inline void SetActive() { activity = true; }
@@ -92,6 +103,8 @@ public:
 	}
 	inline bool GetActive(){ return activity;}
 	void Movement();
+    static int Getscore(){return  score;}
+    static void AddScore(int i){score+=i;}
 
 private:
 	float64 speed;

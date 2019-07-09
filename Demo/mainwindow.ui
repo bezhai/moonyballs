@@ -16,6 +16,10 @@
   <property name="windowTitle">
    <string>MoonyBalls</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pic.qrc">
+    <normaloff>:/pic/ball</normaloff>:/pic/ball</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/pic/bgr);</string>
   </property>
@@ -378,6 +382,8 @@ background: transparent</string>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="pic.qrc"/>
+ </resources>
  <connections/>
 </ui>

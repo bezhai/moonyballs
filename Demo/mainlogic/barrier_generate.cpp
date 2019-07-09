@@ -20,22 +20,9 @@ void Generate::GcoordY(Barrier* barr, vector<Barrier*> &bars)
 void Generate::GcoordX(vector<Barrier*> &bars)
 {
     int size = (int)bars.size();
-	float64 restX = ENDX - STARTX;
-	for (int i = 0; i < size; i++)
-        restX -= 2 * bars[i]->GetCalculateRadius();
-	vector<float64> listX;
+    float64 restX = (ENDX - STARTX) / (size + 1);
 	for (int i = 0; i < size; i++)
 	{
-        listX.push_back(RealRandom(0.0, restX));
-	}
-	std::sort(listX.begin(), listX.end());
-	for (int i = size - 1; i > 0; i--)
-		listX[i] -= listX[i - 1];
-	float64 tempX = STARTX;
-	for (int i = 0; i < size; i++)
-	{
-		tempX += bars[i]->GetCalculateRadius() + listX[i];
-		bars[i]->SetX(tempX);
-		tempX += bars[i]->GetCalculateRadius();
+        bars[i]->SetX(restX * i + 80);
 	}
 }

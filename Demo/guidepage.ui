@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Guide Page</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pic.qrc">
+    <normaloff>:/pic/ball</normaloff>:/pic/ball</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/pic/gdpg);</string>
   </property>
@@ -34,6 +38,8 @@ background: transparent</string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pic.qrc"/>
+ </resources>
  <connections/>
 </ui>

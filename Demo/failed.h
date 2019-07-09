@@ -20,6 +20,8 @@ private slots:
 
     void on_Back_clicked();
 
+    void displayScore(int score);
+
 signals:
     void closegame();
 

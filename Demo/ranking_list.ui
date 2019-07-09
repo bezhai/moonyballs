@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Ranking List</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="pic.qrc">
+    <normaloff>:/pic/ball</normaloff>:/pic/ball</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">background-image: url(:/pic/savesbgr);</string>
   </property>
@@ -187,7 +191,7 @@ background: transparent</string>
     </item>
     <item row="1" column="0">
      <property name="text">
-      <string>Admin</string>
+      <string>CYJ</string>
      </property>
     </item>
     <item row="1" column="1">
@@ -197,7 +201,7 @@ background: transparent</string>
     </item>
     <item row="1" column="2">
      <property name="text">
-      <string>9999999</string>
+      <string>500</string>
      </property>
     </item>
     <item row="1" column="3">
@@ -205,9 +209,71 @@ background: transparent</string>
       <string>1</string>
      </property>
     </item>
+    <item row="2" column="0">
+     <property name="text">
+      <string>CYJ</string>
+     </property>
+    </item>
+    <item row="2" column="1">
+     <property name="text">
+      <string>Easy</string>
+     </property>
+    </item>
+    <item row="2" column="2">
+     <property name="text">
+      <string>300</string>
+     </property>
+    </item>
+    <item row="2" column="3">
+     <property name="text">
+      <string>2</string>
+     </property>
+    </item>
+    <item row="3" column="0">
+     <property name="text">
+      <string>CYJ</string>
+     </property>
+    </item>
+    <item row="3" column="1">
+     <property name="text">
+      <string>Normal</string>
+     </property>
+    </item>
+    <item row="3" column="2">
+     <property name="text">
+      <string>50</string>
+     </property>
+    </item>
+    <item row="3" column="3">
+     <property name="text">
+      <string>3</string>
+     </property>
+    </item>
+    <item row="4" column="0">
+     <property name="text">
+      <string>CYJ</string>
+     </property>
+    </item>
+    <item row="4" column="1">
+     <property name="text">
+      <string>Easy</string>
+     </property>
+    </item>
+    <item row="4" column="2">
+     <property name="text">
+      <string>35</string>
+     </property>
+    </item>
+    <item row="4" column="3">
+     <property name="text">
+      <string>4</string>
+     </property>
+    </item>
    </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pic.qrc"/>
+ </resources>
  <connections/>
 </ui>

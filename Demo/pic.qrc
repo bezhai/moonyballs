@@ -50,5 +50,7 @@
         <file alias="tricy">pic/TriangleBarrierCyan.png</file>
         <file alias="trigr">pic/TriangleBarrierGreen.png</file>
         <file alias="trird">pic/TriangleBarrierRed.png</file>
+        <file alias="shop">pic/Shop.jpg</file>
+        <file alias="items">pic/Items.png</file>
     </qresource>
 </RCC>

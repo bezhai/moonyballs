@@ -16,9 +16,15 @@ void MainControl::BallCalc(vector<PlayerBall*> balls, vector<Barrier*> bars, vec
 						int temp = bar->GetFloor() - CrashJudge::GetFloor(*ball);
 						if (temp == 0 || temp == -1)
 						{
-							vector<Segment> seg_list;
+                            //PlayerBall temp = *ball;
+                            //temp.Movement();
+                            //float64 x = temp.GetcoordX() - ball->GetcoordX();
+                            //float64 y = temp.GetcoordY() - ball->GetcoordY();
+                            vector<Segment> seg_list;
 							BarrierManager::DevideBarrier(bar, seg_list);
 							bar->Damaged(CrashJudge::SetAngle(seg_list, *ball));//里面是判断碰撞的函数，将减少hp返回给SetHp
+                            //ball->AddcoordX(x);
+                            //ball->AddcoordY(y);
 							seg_list.clear();
 						}
 					}
