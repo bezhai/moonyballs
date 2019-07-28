@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/music">
+        <file alias="bgm">music/bgm.mp3</file>
+    </qresource>
+</RCC>
